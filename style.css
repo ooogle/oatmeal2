@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+:root {
+	--booster-bg: #0068df;
+	--booster-bg-h: #0276fc;
+	--booster-border-color: #00008b;
+	--theme-text-color: white;
+	--theme-good-color: #39ff39;
+	--theme-bad-color: red;
+	--booster-border: var(--booster-border-color) solid;
+	--global-font: "Noto Sans", sans-serif;
+}
+
+body {
+	color: var(--theme-text-color);
+}
+
+img {
+	image-rendering: crisp-edges;
+}
+
+.booster {
+	user-select: none;
+	margin-top: 20px;
+	background: var(--booster-bg);
+	border: var(--booster-border);
+	border-radius: 8px;
+	text-align: left;
+	transition: 0.15s;
+	cursor: pointer;
+	font-size: 15px;
+	display: flex;
+}
+
+.booster:hover {
+	background: var(--booster-bg-h);
+}
+
+.booster:active {
+	transform: scale(0.9);
+}
+
+.booster img {
+	width: 130px;
+	padding-left: 5px;
+}
+
+.booster-title {
+	font-size: 20px;
+}
+
+.enough-money {
+	color: var(--theme-good-color);
+}
