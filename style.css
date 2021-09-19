@@ -12,6 +12,7 @@
 
 body {
 	color: var(--theme-text-color);
+	font-family: var(--global-font);
 }
 
 img {
@@ -62,6 +63,19 @@ img {
 	scrollbar-color: var(--booster-bg) transparent;
 }
 
+/* stupid webkit garbage */
+.scrollable-col::-webkit-scrollbar {
+	opacity: 0;
+	transition: 0.2s;
+	display: block;
+	width: 2px;
+}
+
+.scrollable-col:hover::-webkit-scrollbar {
+	opacity: 1;
+	background: var(--booster-bg);
+}
+
 .full-container {
 	padding: 30px;
 }
@@ -73,8 +87,11 @@ img {
 }
 
 .center {
-	text-align: center;
 	margin: auto;
+}
+
+.centertext {
+	text-align: center;
 }
 
 @media (max-width: 900px) {
@@ -107,6 +124,10 @@ img {
 	font-size: 30px;
 }
 
+#ops {
+	font-size: 15px;
+}
+
 .booster {
 	user-select: none;
 	margin-top: 20px;
@@ -115,6 +136,7 @@ img {
 	border-radius: 8px;
 	text-align: left;
 	transition: 0.15s;
+	max-width: 400px;
 	cursor: pointer;
 	font-size: 15px;
 	display: flex;
@@ -149,4 +171,24 @@ img {
 	opacity: 0.9;
 	transform: scale(0.99);
 	pointer-events: none;
+}
+
+.main-clicker {
+	filter: drop-shadow(0 0 15px #5f4f3e);
+	transition: 0.3s cubic-bezier(.6,-1.47,0,1.77);
+	display: block;
+	margin: 50px auto;
+	width: 263px;
+	cursor: pointer;
+}
+
+.main-clicker:hover {
+	transform: scale(1.15);
+	filter: drop-shadow(0 0 30px #5f5f5f);
+}
+
+.main-clicker:active {
+	transform: scale(0.75);
+	filter: drop-shadow(0 0 10px #3f3f2fad);
+	transition: 0.2s ease;
 }
