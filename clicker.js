@@ -1,8 +1,11 @@
 var framespeed = 50; // how many ms in between each game loop
+var current_frame = 0;
 var default_format = {
-	sigfigs: 4
+	sigfigs: 3
 };
-var loaded = false;
+
+var loaded = false; // TODO: loading screen and stuff
+
 var game = {
 	oat_count: 200,
 	ops: 0,
@@ -75,11 +78,11 @@ var game = {
 			ops: 0,
 			opc: 0,
 			customfunc: {
-				run_every: 60, // interval (seconds) to run this at
+				run_every: 10, // interval (seconds) to run this at
 				run: owned => {
 					if (Math.random() * owned > 100) {
-						// TODO: win the lottery
-						console.log("cinnamon win")
+						// TODO: acheivement popup for lottery
+						game.oat_count *= 2;
 					}
 				}
 			},
@@ -88,7 +91,19 @@ var game = {
 	}
 };
 
+function oat_clicked() {
+	game.oat_count += game.opc;
+}
+
 function game_tick() {
+	game.oat_count += game.ops * framespeed / 1000;
+	
+	document.querySelector("#oats").innerHTML = "Oats: " + numberformat.format(Math.floor(game.oat_count), default_format);
+	
+	// TODO: opc
+	document.querySelector("#ops").innerHTML = "Per second: " + (game.ops > 999 ? numberformat.formatShort(game.ops) : Math.floor(game.ops * 10) / 10);
+	
+	// update price stuff
 	for (let i in game.upgrades) {
 		if (game.oat_count >= game.upgrades[i].price) {
 			document.querySelector("#price-" + i).classList.remove("not-enough-money");
@@ -104,7 +119,10 @@ function game_tick() {
 }
 
 async function init() {
+	// anti cheat (super effective):
 	console.log("%cEH!\n%cNot here to cheat, are we? \nIf you truly are here for debugging, please report any issues you find at %chttps://github.com/ooogle/oatmeal2/issues/new", "color:blue; font-size: 100px;", "color:#0068df; font-size: 15px;", "font-size:14px; color:#0276fc; background:lightgray;");
+	
+	// TODO: load save
 	
 	let booster_template = await fetch("/templates/booster_template.hbs").then(a => a.text());
 	
@@ -119,7 +137,29 @@ async function init() {
 		}
 		let target_element = "#" + game.upgrades[i].type + "s";
 		fill_template(booster_template, template_data, target_element);
+		
+		// for upgrades with a custom function such as cinnamon
+		if (game.upgrades[i].customfunc) {
+			setInterval(() => {
+				game.upgrades[i].customfunc.run(game.upgrades[i].owned);
+			}, game.upgrades[i].customfunc.run_every * 1000);
+		}
 	}
+	
+	setInterval(game_tick, framespeed);
+}
+
+function update_ops() {
+	let ops = 0;
+	let opc = 1;
+	for (let i in game.upgrades) {
+		ops += (game.upgrades[i].ops || 0) * (game.upgrades[i].multiplier || 1) * game.upgrades[i].owned;
+		opc += (game.upgrades[i].opc || 0) * (game.upgrades[i].multiplier || 1) * game.upgrades[i].owned;
+	}
+	ops *= game.ops_multiplier;
+	opc *= game.opc_multiplier;
+	game.ops = ops;
+	game.opc = opc;
 }
 
 function update_prices() {
@@ -138,4 +178,5 @@ function buy_upgrade(upgrade) {
 	}
 	game.oat_count -= game.upgrades[upgrade].price;
 	update_prices();
+	update_ops();
 }

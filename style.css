@@ -16,7 +16,14 @@ body {
 }
 
 img {
+	/*
+		this is the funniest one yet:
+		chrome only supports pixelated while firefox only supports crisp-edges
+		they're supposed to be different but crisp-edges on firefox looks the same as pixelated on chrome
+		browsers are hilarious
+	*/
 	image-rendering: crisp-edges;
+	image-rendering: pixelated;
 }
 
 #background {
@@ -78,6 +85,7 @@ img {
 
 .full-container {
 	padding: 30px;
+	padding-top: 50px;
 }
 
 @media (min-width: 900px) {

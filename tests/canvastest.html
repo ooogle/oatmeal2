@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			oat clicker canvas test
+		</title>
+		<script>
+			function genfavicon() {
+				let score = 100;
+				let canvas = document.createElement("canvas");
+				canvas.width = 16;
+				canvas.height = 16;
+				
+				let context = canvas.getContext("2d");
+				let img = document.createElement("img");
+				img.src = "/sprites/favicons/16.png";
+				context.drawImage(img, 0, 0, 15, 15);
+				
+				// draw circle
+				context.beginPath();
+				context.arc(10, 10, 6, 0, 2 * Math.PI);
+				context.fillStyle = "red";
+				context.fill();
+				
+				// draw text
+				context.font = "8px Noto Sans";
+				context.fillStyle = "white";
+				context.fillText(score, 4, 14);
+				
+				let link = document.createElement("link");
+				link.type = "image/x-icon";
+				link.rel = "shortcut icon";
+				link.href = canvas.toDataURL("image/x-icon");
+				document.querySelector("head").appendChild(link);
+			}
+		</script>
+	</head>
+	<body onload="genfavicon()">
+	</body>
+</html>
