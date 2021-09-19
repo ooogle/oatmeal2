@@ -18,6 +18,95 @@ img {
 	image-rendering: crisp-edges;
 }
 
+#background {
+	background-image: url("/sprites/background.jpg");
+	background-size: cover;
+	display: block;
+	filter: blur(4px) brightness(85%); /* TODO: when the new background is done, remove this */
+	height: 120%;
+	width: 120%;
+	left: -50px;
+	top: -50px;
+	position: fixed;
+	z-index: -10;
+	overflow: hidden;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+	flex-flow: row wrap;
+}
+
+.flex-center {
+	justify-content: center;
+}
+
+.flex-equal-width > * {
+	flex: 1 1 0px;
+}
+
+.scrollable-col {
+	overflow-y: scroll;
+	overflow-x: visible;
+	transition: 0.15s;
+	scrollbar-width: thin;
+	padding: 2px;
+	scrollbar-color: transparent transparent;
+}
+
+.scrollable-col:hover {
+	scrollbar-color: var(--booster-bg) transparent;
+}
+
+.full-container {
+	padding: 30px;
+}
+
+@media (min-width: 900px) {
+	.scrollable-col {
+		height: 70vh;
+	}
+}
+
+.center {
+	text-align: center;
+	margin: auto;
+}
+
+@media (max-width: 900px) {
+	.scrollable-col {
+		height: auto;
+	}
+	
+	.booster:last-child {
+		margin-bottom: 30px;
+	}
+	
+	.col-parent {
+		width: 100%;
+		flex-basis: 100%;
+	}
+}
+
+#oat-col {
+	flex-basis: 15%;
+}
+
+.scores {
+	filter: drop-shadow(0 0 5px black);
+	font-size: 25px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#oats {
+	font-size: 30px;
+}
+
 .booster {
 	user-select: none;
 	margin-top: 20px;
@@ -50,4 +139,14 @@ img {
 
 .enough-money {
 	color: var(--theme-good-color);
+}
+
+.not-enough-money {
+	color: var(--theme-bad-color);
+}
+
+.cantbuy {
+	opacity: 0.9;
+	transform: scale(0.99);
+	pointer-events: none;
 }

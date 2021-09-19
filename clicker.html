@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			Oat Clicker
+		</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="shortcut icon" href="sprites/favicons/192.png">
+		
+		<!-- libraries -->
+		<script src="https://cdn.jsdelivr.net/gh/cukmekerb/keymaster@1.7.0/keymaster.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/localforage@1.9.0/dist/localforage.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@4.7.7/dist/handlebars.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/swarm-numberformat@0.4.0/dist/swarm-numberformat.min.js"></script>
+		<script src="helper.js"></script>
+		<script src="clicker.js"></script>
+	</head>
+	<body onload="init()">
+		<div class="full-container">
+			<div class="flex flex-center flex-equal-width flex-wrap">
+				<div class="col-parent" id="oat-col">
+					<div class="scores center">
+						<div id="oats">
+							Oats: 0
+						</div>
+					</div>
+				</div>
+				<div class="col-parent">
+					<div class="scores center">
+						Boosters
+					</div>
+					<div class="scrollable-col" id="boosters">
+						
+					</div>
+				</div>
+				<div class="col-parent">
+					<div class="scores center">
+						Upgrades
+					</div>
+					<div class="scrollable-col" id="upgrades">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="background">
+			<!-- this div will hold the background image -->
+		</div>
+	</body>
+</html>

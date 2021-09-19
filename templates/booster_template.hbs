@@ -1,0 +1,24 @@
+<div class="booster {{#if can_afford}} {{else}} cantbuy {{/if}}" id="booster-{{id}}">
+	<img src="{{icon}}">
+	<div>
+		<span class="booster-title">
+			{{name}}
+		</span>
+		
+		<div>
+			{{description}}
+			
+			<div 
+			{{#if can_afford}}
+				class="enough-money"
+			{{else}}
+				class="not-enough-money"
+			{{/if}} id="price-{{id}}">
+				{{display_price}} oats
+			</div>
+			<span id="owned-{{id}}">
+				Owned: {{display_count}}
+			</span>
+		</div>
+	</div>
+</div>
