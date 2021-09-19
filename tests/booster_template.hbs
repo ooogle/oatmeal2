@@ -1,0 +1,22 @@
+<div class="booster">
+	<img src="{{image_url}}">
+	<div>
+		<span class="booster-title">
+			{{name}}
+		</span>
+		
+		<div>
+			{{description}}
+			
+			<div 
+			{{#if can_afford}}
+				class="enough-money"
+			{{else}}
+				class="not-enough-money"
+			{{/if}}>
+				{{price}}
+			</div>
+			Owned: {{count}}
+		</div>
+	</div>
+</div>
