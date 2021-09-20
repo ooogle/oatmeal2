@@ -7,6 +7,7 @@ var loaded = false; // TODO: loading screen and stuff
 
 var showingops = true;
 var booster_template;
+var last_run = performance.now();
 
 var game = {
 	oat_count: 0,
@@ -34,7 +35,7 @@ var game = {
 			description: "Makes oat milk, which dries into oats",
 			icon: "/sprites/cow.png",
 			base_price: 230,
-			price_interest: 0.15,
+			price_interest: 0.1,
 			owned: 0,
 			unlocked: false,
 			canunlock: () => game.oat_count >= 150,
@@ -61,7 +62,7 @@ var game = {
 			description: "A big place to store oats",
 			icon: "/sprites/pot.png",
 			base_price: 350,
-			price_interest: 0.15,
+			price_interest: 0.25,
 			owned: 0,
 			unlocked: true,
 			ops: 0,
@@ -88,7 +89,7 @@ var game = {
 			description: "Makes your oatmeal taste better",
 			icon: "/sprites/cinnamon.png",
 			base_price: 250,
-			price_interest: 0.15,
+			price_interest: 0.12,
 			owned: 0,
 			unlocked: true,
 			ops: 0,
@@ -158,7 +159,9 @@ function oat_clicked() {
 }
 
 function game_tick() {
-	game.oat_count += game.ops * framespeed / 1000;
+	game.oat_count += game.ops * (performance.now() - last_run) / 1000;
+	
+	last_run = performance.now();
 	
 	if (game.oat_count > 0) {
 		document.title = numberformat.formatShort(Math.floor(game.oat_count)) + " oats - Oat Clicker";
