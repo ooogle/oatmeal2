@@ -150,6 +150,7 @@ img {
 	font-size: 15px;
 	display: flex;
 	align-items: flex-start
+	padding: 10px auto;
 }
 
 .booster:hover {
@@ -162,7 +163,6 @@ img {
 
 .booster img {
 	width: 130px;
-	padding-left: 5px;
 }
 
 .booster-title {

@@ -6,6 +6,7 @@ var default_format = {
 var loaded = false; // TODO: loading screen and stuff
 
 var showingops = true;
+var booster_template;
 
 var game = {
 	oat_count: 0,
@@ -14,8 +15,8 @@ var game = {
 	opc: 1,
 	opc_multiplier: 1,
 	upgrades: {
+		// to calculate the price: base_price * (1 + price_interest) ** owned
 		spoon: {
-			// to calculate the price: base_price * (1 + price_interest) ** owned
 			name: "Spoon",
 			description: "Scoops up oats every five seconds",
 			icon: "/sprites/spoon.png",
@@ -24,6 +25,20 @@ var game = {
 			owned: 0,
 			unlocked: true,
 			ops: 1 / 5,
+			opc: 0,
+			multiplier: 1,
+			type: "booster"
+		},
+		cow: {
+			name: "Cow",
+			description: "Makes oat milk, which dries into oats",
+			icon: "/sprites/cow.png",
+			base_price: 230,
+			price_interest: 0.15,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count >= 150,
+			ops: 1,
 			opc: 0,
 			multiplier: 1,
 			type: "booster"
@@ -101,6 +116,7 @@ function save_game() {
 		achievements: {}
 	}
 	for (let i in game.upgrades) {
+		if (!game.upgrades[i].unlocked) continue;
 		save.game.upgrades[i] = {
 			owned: game.upgrades[i].owned,
 			multiplier: game.upgrades[i].multiplier
@@ -124,11 +140,17 @@ async function load_save() {
 	for (let i in save.game.upgrades) {
 		game.upgrades[i].owned = save.game.upgrades[i].owned;
 		game.upgrades[i].multiplier = save.game.upgrades[i].multiplier;
+		game.upgrades[i].unlocked = true; // only unlocked upgrades are saved, so this is true if the save exists
 	}
 	
 	game.oat_count = save.game.oat_count;
 	
 	update_ops();
+}
+
+function resetgame() {
+	localforage.clear();
+	window.location = window.location;
 }
 
 function oat_clicked() {
@@ -158,6 +180,7 @@ function game_tick() {
 	
 	// update price stuff
 	for (let i in game.upgrades) {
+		if (!game.upgrades[i].unlocked) continue;
 		if (game.oat_count >= game.upgrades[i].price) {
 			document.querySelector("#price-" + i).classList.remove("not-enough-money");
 			document.querySelector("#price-" + i).classList.add("enough-money");
@@ -179,19 +202,21 @@ async function init() {
 	
 	setup_keymap();
 	
-	let booster_template = await fetch("/templates/booster_template.hbs").then(a => a.text());
+	booster_template = await fetch("/templates/booster_template.hbs").then(a => a.text());
 	
 	for (let i in game.upgrades) {
-		game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
-		let template_data = {
-			...game.upgrades[i],
-			can_afford: game.oat_count >= game.upgrades[i].price,
-			display_price: numberformat.format(game.upgrades[i].price, default_format),
-			display_count: numberformat.format(game.upgrades[i].owned, default_format),
-			id: i
+		if (game.upgrades[i].unlocked) {
+			game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
+			let template_data = {
+				...game.upgrades[i],
+				can_afford: game.oat_count >= game.upgrades[i].price,
+				display_price: numberformat.format(game.upgrades[i].price, default_format),
+				display_count: numberformat.format(game.upgrades[i].owned, default_format),
+				id: i
+			}
+			let target_element = "#" + game.upgrades[i].type + "s";
+			fill_template(booster_template, template_data, target_element);
 		}
-		let target_element = "#" + game.upgrades[i].type + "s";
-		fill_template(booster_template, template_data, target_element);
 		
 		// for upgrades with a custom function such as cinnamon
 		if (game.upgrades[i].customfunc) {
@@ -202,6 +227,7 @@ async function init() {
 	}
 	
 	setInterval(game_tick, framespeed);
+	setInterval(check_achievements, framespeed * 5); // check achievements every five ticks
 	setInterval(save_game, 10000); // save every ten seconds
 }
 
@@ -224,6 +250,7 @@ function update_ops() {
 
 function update_prices() {
 	for (let i in game.upgrades) {
+		if (!game.upgrades[i].unlocked) continue;
 		game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
 		document.querySelector("#price-" + i).innerHTML = numberformat.format(game.upgrades[i].price, default_format) + " oats";
 		document.querySelector("#owned-" + i).innerHTML = "Owned: " + numberformat.format(game.upgrades[i].owned, default_format);
@@ -239,4 +266,31 @@ function buy_upgrade(upgrade) {
 	game.oat_count -= game.upgrades[upgrade].price;
 	update_prices();
 	update_ops();
+}
+
+function unlock_upgrade(i) {
+	let parser = new DOMParser();
+	let target_element = document.querySelector("#" + game.upgrades[i].type + "s");
+	game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
+	let template_data = {
+		...game.upgrades[i],
+		can_afford: game.oat_count >= game.upgrades[i].price,
+		display_price: numberformat.format(game.upgrades[i].price, default_format),
+		display_count: numberformat.format(game.upgrades[i].owned, default_format),
+		id: i
+	}
+	let html = fill_template(booster_template, template_data, null);
+	let elem = parser.parseFromString(html, "text/html").firstChild;
+	// TODO: fancy animation and popup
+	target_element.insertBefore(elem, target_element.children[1]);
+	game.upgrades[i].unlocked = true;
+}
+
+function check_achievements() {
+	// TODO: loop through achievements and stuff
+	
+	for (let i in game.upgrades) {
+		if (game.upgrades[i].unlocked || !game.upgrades[i].canunlock) continue;
+		if (game.upgrades[i].canunlock()) unlock_upgrade(i);
+	}
 }
