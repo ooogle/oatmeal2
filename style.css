@@ -202,3 +202,8 @@ img {
 	filter: drop-shadow(0 0 10px #3f3f2fad);
 	transition: 0.2s ease;
 }
+
+.link {
+	 pointer-events:all;
+	 color: #00df12;
+}

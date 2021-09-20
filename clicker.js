@@ -8,7 +8,7 @@ var loaded = false; // TODO: loading screen and stuff
 var showingops = true;
 
 var game = {
-	oat_count: 200,
+	oat_count: 0,
 	ops: 0,
 	ops_multiplier: 1,
 	opc: 1,
@@ -96,9 +96,7 @@ function save_game() {
 	let save = {
 		game: {
 			upgrades: {},
-			oat_count: game.oat_count,
-			ops_multiplier: game.ops_multiplier,
-			opc_multiplier: game.opc_multiplier
+			oat_count: game.oat_count
 		},
 		achievements: {}
 	}
@@ -129,8 +127,6 @@ async function load_save() {
 	}
 	
 	game.oat_count = save.game.oat_count;
-	game.ops_multiplier = save.game.ops_multiplier;
-	game.opc_multiplier = save.game.opc_multiplier;
 	
 	update_ops();
 }
@@ -212,12 +208,16 @@ async function init() {
 function update_ops() {
 	let ops = 0;
 	let opc = 1;
+	let opc_multiplier = 1;
+	let ops_multiplier = 1;
 	for (let i in game.upgrades) {
 		ops += (game.upgrades[i].ops || 0) * (game.upgrades[i].multiplier || 1) * game.upgrades[i].owned;
 		opc += (game.upgrades[i].opc || 0) * (game.upgrades[i].multiplier || 1) * game.upgrades[i].owned;
+		if (game.upgrades[i].opc_multiplier) opc_multiplier += game.upgrades[i].opc_multiplier * game.upgrades[i].owned;
+		if (game.upgrades[i].ops_multiplier) ops_multiplier += game.upgrades[i].ops_multiplier * game.upgrades[i].owned;
 	}
-	ops *= game.ops_multiplier;
-	opc *= game.opc_multiplier;
+	ops *= ops_multiplier;
+	opc *= opc_multiplier;
 	game.ops = ops;
 	game.opc = opc;
 }
