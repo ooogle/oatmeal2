@@ -204,6 +204,6 @@ img {
 }
 
 .link {
-	 pointer-events:all;
-	 color: #00df12;
+	pointer-events:all;
+	color: var(--theme-color-good);
 }

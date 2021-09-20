@@ -5,8 +5,10 @@ var default_format = {
 
 var loaded = false; // TODO: loading screen and stuff
 
+var current_frame = 0;
+
 var showingops = true;
-var booster_template;
+
 var last_run = performance.now();
 
 var game = {
@@ -181,6 +183,10 @@ function game_tick() {
 		document.querySelector("#ops").innerHTML = "Per click: " + (game.opc > 999 ? numberformat.formatShort(game.opc) : Math.floor(game.opc * 10) / 10);
 	}
 	
+	// this stuff will only run every 5 frames
+	if (current_frame != 5) return current_frame++;
+	current_frame = 0;
+
 	// update price stuff
 	for (let i in game.upgrades) {
 		if (!game.upgrades[i].unlocked) continue;
@@ -195,6 +201,8 @@ function game_tick() {
 			document.querySelector("#booster-" + i).classList.add("cantbuy");
 		}
 	}
+	
+	check_achievements();
 }
 
 async function init() {
@@ -204,8 +212,6 @@ async function init() {
 	await load_save();
 	
 	setup_keymap();
-	
-	booster_template = await fetch("/templates/booster_template.hbs").then(a => a.text());
 	
 	for (let i in game.upgrades) {
 		if (game.upgrades[i].unlocked) {
@@ -218,7 +224,7 @@ async function init() {
 				id: i
 			}
 			let target_element = "#" + game.upgrades[i].type + "s";
-			fill_template(booster_template, template_data, target_element);
+			await fill_template("/templates/booster_template.hbs", template_data, target_element);
 		}
 		
 		// for upgrades with a custom function such as cinnamon
@@ -230,7 +236,6 @@ async function init() {
 	}
 	
 	setInterval(game_tick, framespeed);
-	setInterval(check_achievements, framespeed * 5); // check achievements every five ticks
 	setInterval(save_game, 10000); // save every ten seconds
 }
 
@@ -271,7 +276,7 @@ function buy_upgrade(upgrade) {
 	update_ops();
 }
 
-function unlock_upgrade(i) {
+async function unlock_upgrade(i) {
 	let parser = new DOMParser();
 	let target_element = document.querySelector("#" + game.upgrades[i].type + "s");
 	game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
@@ -282,7 +287,7 @@ function unlock_upgrade(i) {
 		display_count: numberformat.format(game.upgrades[i].owned, default_format),
 		id: i
 	}
-	let html = fill_template(booster_template, template_data, null);
+	let html = await fill_template("/templates/booster_template.hbs", template_data, null);
 	let elem = parser.parseFromString(html, "text/html").firstChild;
 	// TODO: fancy animation and popup
 	target_element.insertBefore(elem, target_element.children[1]);
