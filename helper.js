@@ -19,3 +19,8 @@ function fill_template(template_string, data, target_selector, handlebar_options
 	var html = template(data);
 	document.querySelector(target_selector).innerHTML += html;
 }
+
+/** initialzes the keymap **/
+function setup_keymap() {
+	key("p", () => showingops = !showingops);
+}
