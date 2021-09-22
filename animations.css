@@ -1,0 +1,49 @@
+@keyframes appear {
+	0% {
+		max-height: 0px;
+		opacity: 0;
+	}
+	30% {
+		opacity: 1;
+	}
+	100% {
+		max-height: 800px;
+	}
+}
+
+.appear {
+	animation: appear 0.8s ease-in-out;
+	overflow: hidden;
+}
+
+@keyframes slide-left {
+	0% {
+		opacity: 0;
+		transform: scaleX(0);
+		margin-left: -16em;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.slide-left {
+	animation: slide-left 0.4s;
+}
+
+@keyframes delete-right {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		transform: scaleX(0);
+
+	}
+}
+
+.delete-right {
+	animation: delete-right 0.3s;
+	opacity: 0;
+	transform: scaleX(0);
+}

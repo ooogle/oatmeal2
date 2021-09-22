@@ -21,6 +21,7 @@ var game = {
 		// to calculate the price: base_price * (1 + price_interest) ** owned
 		spoon: {
 			name: "Spoon",
+			plural: "Spoons",
 			description: "Scoops up oats every five seconds",
 			icon: "/sprites/spoon.png",
 			base_price: 30,
@@ -34,6 +35,7 @@ var game = {
 		},
 		cow: {
 			name: "Cow",
+			plural: "Cows",
 			description: "Makes oat milk, which dries into oats",
 			icon: "/sprites/cow.png",
 			base_price: 230,
@@ -48,6 +50,7 @@ var game = {
 		},
 		bowl: {
 			name: "Oat Bowl",
+			plural: "Bowls",
 			description: "A place to store oats",
 			icon: "/sprites/bowl.png",
 			base_price: 75,
@@ -61,6 +64,7 @@ var game = {
 		},
 		pot: {
 			name: "Oat Pot",
+			plural: "Pots",
 			description: "A big place to store oats",
 			icon: "/sprites/pot.png",
 			base_price: 350,
@@ -74,6 +78,7 @@ var game = {
 		},
 		bs: {
 			name: "Bigger Spoons",
+			plural: "Spoon Size",
 			description: "Make your spoons bigger to scoop up more oats",
 			icon: "/sprites/big_spoon.png",
 			base_price: 100,
@@ -88,6 +93,7 @@ var game = {
 		},
 		cinnamon: {
 			name: "Cinnamon",
+			plural: "Cinnamons",
 			description: "Makes your oatmeal taste better",
 			icon: "/sprites/cinnamon.png",
 			base_price: 250,
@@ -106,6 +112,20 @@ var game = {
 				}
 			},
 			type: "upgrade"
+		},
+		beetle: {
+			name: "Oat Beetle",
+			plural: "Beetles",
+			description: "Rolls up balls of oats for you",
+			icon: "/sprites/beetle.png",
+			base_price: 50_000_000,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			ops: 700,
+			opc: 800,
+			type: "booster",
+			multiplier: 1
 		}
 	}
 };
@@ -235,6 +255,8 @@ async function init() {
 		}
 	}
 	
+	prefetchtemplates(["/templates/achievement_template.hbs"]);
+	
 	setInterval(game_tick, framespeed);
 	setInterval(save_game, 10000); // save every ten seconds
 }
@@ -277,7 +299,6 @@ function buy_upgrade(upgrade) {
 }
 
 async function unlock_upgrade(i) {
-	let parser = new DOMParser();
 	let target_element = document.querySelector("#" + game.upgrades[i].type + "s");
 	game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
 	let template_data = {
@@ -287,15 +308,22 @@ async function unlock_upgrade(i) {
 		display_count: numberformat.format(game.upgrades[i].owned, default_format),
 		id: i
 	}
-	let html = await fill_template("/templates/booster_template.hbs", template_data, null);
-	let elem = parser.parseFromString(html, "text/html").firstChild;
-	// TODO: fancy animation and popup
+	let elem = await fill_template("/templates/booster_template.hbs", template_data, null);
+	elem.classList.add("appear");
+	// TODO: popup
+	
 	target_element.insertBefore(elem, target_element.children[1]);
 	game.upgrades[i].unlocked = true;
 }
 
 function check_achievements() {
 	// TODO: loop through achievements and stuff
+	
+	for (let i in achievements) {
+		if (!achievements[i].possible() || achievements[i].has_unlocked) continue;
+		achieve("Achievement Unlocked", achievements[i].text);
+		achievements[i].has_unlocked = true;
+	}
 	
 	for (let i in game.upgrades) {
 		if (game.upgrades[i].unlocked || !game.upgrades[i].canunlock) continue;

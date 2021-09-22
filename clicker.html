@@ -5,6 +5,7 @@
 			Oat Clicker
 		</title>
 		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="animations.css">
 		<link rel="shortcut icon" href="sprites/favicons/16.png">
 		<link rel="apple-touch-icon" href="apple-touch-icon.png">
 		<link rel="manifest" href="manifest.webmanifest">
@@ -23,7 +24,7 @@
 		<script src="clicker.js"></script>
 		<script src="achievements.js"></script>
 	</head>
-	<body onload="init()">
+	<body onload="init()" oncontextmenu="event.preventDefault()">
 		<div class="full-container">
 			<div class="flex flex-center flex-equal-width flex-wrap">
 				<div class="col-parent" id="oat-col">
@@ -54,6 +55,9 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div id="achievements">
+			<!-- this div will contain achievements -->
 		</div>
 		<div id="background">
 			<!-- this div will hold the background image -->

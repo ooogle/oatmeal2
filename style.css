@@ -169,6 +169,16 @@ img {
 	font-size: 20px;
 }
 
+.achievement {
+	padding: 3px 10px;
+	margin-left: 10px;
+	max-width: 250px;
+	background: var(--booster-bg) !important;
+	cursor: auto !important;
+	display: inline-block;
+	filter: drop-shadow(3px 1px 8px #1f1f1f);
+}
+
 .enough-money {
 	color: var(--theme-good-color);
 }
@@ -206,4 +216,11 @@ img {
 .link {
 	pointer-events:all;
 	color: var(--theme-color-good);
+}
+
+#achievements {
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	height: 100px;
 }

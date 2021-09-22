@@ -26,11 +26,45 @@ async function fill_template(template_url, data, target_selector, handlebar_opti
 	
 	let template = Handlebars.compile(template_string, handlebar_options);
 	let html = template(data);
-	if (!target_selector) return html;
+	if (!target_selector) {
+		let parser = new DOMParser();
+		return parser.parseFromString(html, "text/html").body.firstChild;
+	}
 	document.querySelector(target_selector).innerHTML += html;
 }
 
 /** initialzes the keymap **/
 function setup_keymap() {
 	key("p", () => showingops = !showingops);
+}
+
+/** makes achievement popup
+	* @param {String} title - the title of the popup
+	* @param {String} description - the description of the popup
+*/
+async function achieve(title, description) {
+	let elem = await fill_template("/templates/achievement_template.hbs", {title, description}, null);
+	elem.classList.add("slide-left");
+	let target_elem = document.querySelector("#achievements");
+	if (!target_elem.children.length) {
+		target_elem.appendChild(elem);
+	}
+	else {
+		target_elem.insertBefore(elem, target_elem.children[0]);
+	}
+	setTimeout(() => elem.classList.remove("slide-left"), 400)
+	setTimeout(() => {
+		elem.classList.add("delete-right");
+		setTimeout(() => {
+			elem.remove();
+		}, 400)
+	}, 4000);
+}
+/** prefetches templates
+	* @param {Object} urls - and array of URLs to prefetch
+*/
+function prefetchtemplates(urls) {
+	for (let url of urls) {
+		fetch(url).then(a => a.json()).then(a => templates[url] = a);
+	}
 }
