@@ -43,7 +43,7 @@ function setup_keymap() {
 	* @param {String} description - the description of the popup
 */
 async function achieve(title, description) {
-	let elem = await fill_template("/templates/achievement_template.hbs", {title, description}, null);
+	let elem = await fill_template("/templates/achievement_template.hbs", {title, description}, null, {noEscape: true});
 	elem.classList.add("slide-left");
 	let target_elem = document.querySelector("#achievements");
 	if (!target_elem.children.length) {
@@ -67,4 +67,12 @@ function prefetchtemplates(urls) {
 	for (let url of urls) {
 		fetch(url).then(a => a.json()).then(a => templates[url] = a);
 	}
+}
+
+/* self explanatory
+	* @param {Number} min - the minimum number
+	* @param {Number} max - the maximum number
+*/
+function randint(min, max) {
+	return Math.floor(Math.random() * max) + min;
 }

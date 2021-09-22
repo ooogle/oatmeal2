@@ -13,6 +13,7 @@
 body {
 	color: var(--theme-text-color);
 	font-family: var(--global-font);
+	overflow-x: hidden;
 }
 
 img {
@@ -138,6 +139,7 @@ img {
 }
 
 .booster {
+	padding: 5px 3px;
 	user-select: none;
 	margin-top: 20px;
 	background: var(--booster-bg);
@@ -150,7 +152,6 @@ img {
 	font-size: 15px;
 	display: flex;
 	align-items: flex-start
-	padding: 10px auto;
 }
 
 .booster:hover {
@@ -172,8 +173,9 @@ img {
 .achievement {
 	padding: 3px 10px;
 	margin-left: 10px;
-	max-width: 250px;
-	background: var(--booster-bg) !important;
+	max-width: 94%;
+	max-height: 100%;
+	pointer-events: none;
 	cursor: auto !important;
 	display: inline-block;
 	filter: drop-shadow(3px 1px 8px #1f1f1f);
@@ -214,13 +216,15 @@ img {
 }
 
 .link {
-	pointer-events:all;
-	color: var(--theme-color-good);
+	pointer-events: all;
+	color: var(--theme-good-color);
 }
 
 #achievements {
 	position: fixed;
-	bottom: 10px;
-	left: 10px;
+	bottom: 5px;
+	left: 0;
 	height: 100px;
+	padding: 0 15px;
+	overflow: hidden;
 }

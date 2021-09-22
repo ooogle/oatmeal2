@@ -1,18 +1,16 @@
 @keyframes appear {
-	0% {
-		max-height: 0px;
+	0% {	
 		opacity: 0;
-	}
-	30% {
-		opacity: 1;
+		transform: scaleY(0);
+		margin-top: -6em;
 	}
 	100% {
-		max-height: 800px;
+		opacity: 1;
 	}
 }
 
 .appear {
-	animation: appear 0.8s ease-in-out;
+	animation: appear 0.35s ease-out;
 	overflow: hidden;
 }
 

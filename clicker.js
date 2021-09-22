@@ -178,6 +178,7 @@ function resetgame() {
 
 function oat_clicked() {
 	game.oat_count += game.opc;
+	check_achievements();
 }
 
 function game_tick() {
@@ -227,7 +228,7 @@ function game_tick() {
 
 async function init() {
 	// anti cheat (super effective):
-	console.log("%cEH!\n%cNot here to cheat, are we? \nIf you truly are here for debugging, please report any issues you find at %chttps://github.com/ooogle/oatmeal2/issues/new", "color:blue; font-size: 100px;", "color:#0068df; font-size: 15px;", "font-size:14px; color:#0276fc; background:lightgray;");
+	console.log("%cHEY!\n%cNot here to cheat, are we? \nIf you truly are here for debugging, please report any issues you find at %chttps://github.com/ooogle/oatmeal2/issues/new", "color:blue; font-size: 100px;", "color:#0068df; font-size: 15px;", "font-size:14px; color:#0276fc; background:lightgray;");
 	
 	await load_save();
 	
@@ -310,15 +311,15 @@ async function unlock_upgrade(i) {
 	}
 	let elem = await fill_template("/templates/booster_template.hbs", template_data, null);
 	elem.classList.add("appear");
-	// TODO: popup
-	
 	target_element.insertBefore(elem, target_element.children[1]);
 	game.upgrades[i].unlocked = true;
+	
+	// unlock popup
+	let messages = ["You've unlocked ", "You unlocked ", "Now you have ", "You can now buy "];
+	achieve("Booster Unlocked", messages[randint(0, messages.length)] + game.upgrades[i].plural + "!");
 }
 
 function check_achievements() {
-	// TODO: loop through achievements and stuff
-	
 	for (let i in achievements) {
 		if (!achievements[i].possible() || achievements[i].has_unlocked) continue;
 		achieve("Achievement Unlocked", achievements[i].text);
