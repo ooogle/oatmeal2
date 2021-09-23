@@ -106,7 +106,7 @@ var game = {
 				run_every: 10, // interval (seconds) to run this at
 				run: owned => {
 					if (Math.random() * owned > 100) {
-						// TODO: acheivement popup for lottery
+						achieve("Cinnamon Lottery", "You just won the cinnamon lottery!");
 						game.oat_count *= 2;
 					}
 				}
@@ -122,6 +122,7 @@ var game = {
 			price_interest: 0.1,
 			owned: 0,
 			unlocked: false,
+			canunlock: () => game.oat_count >= 150_000_000_000,
 			ops: 700,
 			opc: 800,
 			type: "booster",
@@ -132,6 +133,7 @@ var game = {
 
 function save_game() {
 	let save = {
+		timestamp: Date.now(),
 		game: {
 			upgrades: {},
 			oat_count: game.oat_count
@@ -169,6 +171,14 @@ async function load_save() {
 	game.oat_count = save.game.oat_count;
 	
 	update_ops();
+	
+	if ((Date.now() - save.timestamp) / 1000 < 60) return;
+	
+	let oats_earned = (Date.now() - save.timestamp) / 1000 * game.ops
+	
+	game.oat_count += oats_earned;
+	
+	achieve("While you were gone...", "You earned " + numberformat.formatShort(Math.floor(oats_earned), default_format) + " oats");
 }
 
 function resetgame() {
@@ -244,6 +254,7 @@ async function init() {
 				display_count: numberformat.format(game.upgrades[i].owned, default_format),
 				id: i
 			}
+			
 			let target_element = "#" + game.upgrades[i].type + "s";
 			await fill_template("/templates/booster_template.hbs", template_data, target_element);
 		}
