@@ -73,13 +73,18 @@ img {
 
 /* stupid webkit garbage */
 .scrollable-col::-webkit-scrollbar {
-	opacity: 0;
-	transition: 0.2s;
 	display: block;
-	width: 2px;
+	width: 3px;
+	padding: 1px;
 }
 
-.scrollable-col:hover::-webkit-scrollbar {
+.scrollable-col::-webkit-scrolbar-thumb {
+	opacity: 0;
+	transition: 0.2s;
+	border-radius: 3px;
+}
+
+.scrollable-col:hover::-webkit-scrollbar-thumb {
 	opacity: 1;
 	background: var(--booster-bg);
 }

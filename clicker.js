@@ -34,7 +34,7 @@ var game = {
 			type: "booster"
 		},
 		cow: {
-			name: "Cow",
+			name: "Oat Cow",
 			plural: "Cows",
 			description: "Makes oat milk, which dries into oats",
 			icon: "/sprites/cow.png",
@@ -174,7 +174,7 @@ async function load_save() {
 	
 	if ((Date.now() - save.timestamp) / 1000 < 60) return;
 	
-	let oats_earned = (Date.now() - save.timestamp) / 1000 * game.ops
+	let oats_earned = (Date.now() - save.timestamp) / 1000 * game.ops / 3
 	
 	game.oat_count += oats_earned;
 	
