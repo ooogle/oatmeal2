@@ -76,6 +76,7 @@ img {
 	display: block;
 	width: 3px;
 	padding: 1px;
+	border-radius: 3px;
 }
 
 .scrollable-col::-webkit-scrolbar-thumb {

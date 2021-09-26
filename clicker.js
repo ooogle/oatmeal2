@@ -240,6 +240,8 @@ async function init() {
 	// anti cheat (super effective):
 	console.log("%cHEY!\n%cNot here to cheat, are we? \nIf you truly are here for debugging, please report any issues you find at %chttps://github.com/ooogle/oatmeal2/issues/new", "color:blue; font-size: 100px;", "color:#0068df; font-size: 15px;", "font-size:14px; color:#0276fc; background:lightgray;");
 	
+	await prefetchtemplates(["/templates/achievement_template.hbs"]);
+	
 	await load_save();
 	
 	setup_keymap();
@@ -266,8 +268,6 @@ async function init() {
 			}, game.upgrades[i].customfunc.run_every * 1000);
 		}
 	}
-	
-	prefetchtemplates(["/templates/achievement_template.hbs"]);
 	
 	setInterval(game_tick, framespeed);
 	setInterval(save_game, 10000); // save every ten seconds

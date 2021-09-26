@@ -64,9 +64,14 @@ async function achieve(title, description) {
 	* @param {Object} urls - and array of URLs to prefetch
 */
 function prefetchtemplates(urls) {
-	for (let url of urls) {
-		fetch(url).then(a => a.json()).then(a => templates[url] = a);
-	}
+	return new Promise((resolve, reject) => {
+		for (let i in urls) {
+			fetch(urls[i]).then(a => a.text()).then(a => {
+				templates[urls[i]] = a
+				if (i == urls.length - 1) resolve();
+			});
+		}
+	});
 }
 
 /* self explanatory

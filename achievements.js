@@ -19,6 +19,10 @@ var achievements = {
 		text: "you have 50 oats!",
 		possible: () => game.oat_count >= 50
 	},
+	linux: {
+		text: "linux user: you're using the coolest OS",
+		possible: () => /linux/i.test(navigator.userAgent) && game.oat_count >= 10
+	},
 	one_hundred: {
 		text: "wow! 100 oats!",
 		possible: () => game.oat_count >= 100

@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="/style.css">
+	</head>
+	<body>
+		<script>
+			// try running `await custom_confirm()` from the console
+			function custom_confirm() {
+				return new Promise((resolve, reject) => {
+					let yes = () => resolve(true);
+					let no = () => resolve(false);
+					document.querySelector("#yes").onclick = yes;
+					document.querySelector("#no").onclick = no;
+				});
+			}
+			
+		// try running `await custom_prompt()` from the console
+			function custom_prompt() {
+				return new Promise((resolve, reject) => {
+					let submit = () => resolve(document.querySelector("#bean_input").value);
+					document.querySelector("#submit").onclick = submit;
+				});
+			}
+		</script>
+		<div class="booster">
+			<div>
+				<span class="booster-title">
+					Do you want to eat beans?
+				</span>
+				
+				<div>
+					you can choose not to if you want
+				</div>
+				<button id="yes">
+					yes
+				</button>
+				<button id="no">
+					no
+				</button>
+			</div>
+		</div>
+		<div class="booster">
+			<div>
+				<span class="booster-title">
+					Do you want to eat beans?
+				</span>
+				
+				<input id="bean_input">
+				<button id="submit">
+					submit
+				</button>
+			</div>
+		</div>
+	</body>
+</html>
