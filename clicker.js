@@ -269,6 +269,12 @@ async function init() {
 		}
 	}
 	
+	// draw main oat as canvas (very good for mobile usability)
+	let context = document.querySelector("#oat_image").getContext("2d");
+	let img = document.createElement("img");
+	img.src = "/sprites/oat.png";
+	context.drawImage(img, 0, 0, 263, 354);
+	
 	setInterval(game_tick, framespeed);
 	setInterval(save_game, 10000); // save every ten seconds
 }

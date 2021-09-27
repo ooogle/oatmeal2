@@ -11,7 +11,7 @@ var templates = {}; // this caches the templates so they don't need to be fetche
  * @param {String} target_selector - the selector of the element to put the final HTML. if null then the html is returned
  * @param {Object} handlebar_options - extra handlebars config
  */
-async function fill_template(template_url, data, target_selector, handlebar_options, just_return) {
+async function fill_template(template_url, data, target_selector, handlebar_options) {
 	if (typeof data != "object") {
 		return;
 	}

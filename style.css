@@ -96,6 +96,16 @@ img {
 }
 
 @media (min-width: 900px) {
+	.main-clicker:active {
+		transform: scale(0.75);
+		filter: drop-shadow(0 0 10px #3f3f2fad);
+		transition: 0.2s ease;
+	}
+	.main-clicker:hover:not(:active) {
+		transform: scale(1.15);
+		filter: drop-shadow(0 0 30px #5f5f5f);
+	}
+
 	.scrollable-col {
 		height: 80vh;
 	}
@@ -110,6 +120,13 @@ img {
 }
 
 @media (max-width: 900px) {
+	
+	.main-clicker:active {
+		transform: scale(0.80);
+		filter: drop-shadow(0 0 10px #3f3f2fad);
+		transition: 0.2s ease;
+	}
+	
 	.scrollable-col {
 		height: auto;
 	}
@@ -210,17 +227,6 @@ img {
 	cursor: pointer;
 }
 
-.main-clicker:hover {
-	transform: scale(1.15);
-	filter: drop-shadow(0 0 30px #5f5f5f);
-}
-
-.main-clicker:active {
-	transform: scale(0.75);
-	filter: drop-shadow(0 0 10px #3f3f2fad);
-	transition: 0.2s ease;
-}
-
 .link {
 	pointer-events: all;
 	color: var(--theme-good-color);
@@ -228,9 +234,9 @@ img {
 
 #achievements {
 	position: fixed;
-	bottom: 5px;
+	bottom: 0;
 	left: 0;
 	height: 100px;
-	padding: 0 15px;
+	padding: 0 15px 5px;
 	overflow: hidden;
 }
