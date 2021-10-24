@@ -1,7 +1,9 @@
 var framespeed = 50; // how many ms in between each game loop
 var default_format = {
-	sigfigs: 3
+	sigfigs: 4
 };
+
+var oat_image = "/sprites/oat.png";
 
 var loaded = false; // TODO: loading screen and stuff
 
@@ -73,7 +75,7 @@ var game = {
 			owned: 0,
 			unlocked: false,
 			canunlock: () => game.oat_count >= 2000,
-			ops: 20,
+			ops: 15,
 			opc: 0,
 			multiplier: 1,
 			type: "booster"
@@ -372,7 +374,7 @@ async function init() {
 	// draw main oat as canvas (very good for mobile usability)
 	let context = document.querySelector("#oat_image").getContext("2d");
 	let img = document.createElement("img");
-	img.src = "/sprites/oat.png";
+	img.src = oat_image;
 	context.drawImage(img, 0, 0, 263, 354);
 	
 	setInterval(game_tick, framespeed);
