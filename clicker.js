@@ -48,6 +48,52 @@ var game = {
 			multiplier: 1,
 			type: "booster"
 		},
+		granary: {
+			name: "Granary",
+			plural: "Granaries",
+			description: "Mills you eight oats per second",
+			icon: "/sprites/granary.png",
+			base_price: 480,
+			price_interest: 0.18,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count >= 390,
+			ops: 8,
+			opc: 0,
+			multiplier: 1,
+			type: "booster"
+		},
+		temple: {
+			name: "Temple",
+			plural: "Temples",
+			description: "Appeases the Oat Gods",
+			icon: "/sprites/temple.png",
+			base_price: 3000,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count >= 2000,
+			ops: 20,
+			opc: 0,
+			multiplier: 1,
+			type: "booster"
+		},
+		polytheism: {
+			name: "Polytheism",
+			plural: "Oat Gods",
+			description: "The more gods you worship, the more oats you get",
+			icon: "/sprites/polytheism.png",
+			base_price: 5000,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.upgrades.temple.owned > 0,
+			ops: 0,
+			opc: 0,
+			multiplies: "temple",
+			multiplier: 1,
+			type: "upgrade"
+		},
 		bowl: {
 			name: "Oat Bowl",
 			plural: "Bowls",
@@ -202,6 +248,9 @@ function game_tick() {
 	else {
 		document.title = "Oat Clicker";
 	}
+
+	// this should never happen, but just in case
+	if (isNaN(game.oat_count)) game.oat_count = 0;
 	
 	if (!document.hasFocus()) return; // don't waste resources on other dom updates when the document doesn't have focus
 	
@@ -217,7 +266,7 @@ function game_tick() {
 	// this stuff will only run every 5 frames
 	if (current_frame != 5) return current_frame++;
 	current_frame = 0;
-
+	
 	// update price stuff
 	for (let i in game.upgrades) {
 		if (!game.upgrades[i].unlocked) continue;
@@ -239,7 +288,7 @@ function game_tick() {
 function loadscreen() {
 	if (!loaded) {
 		let messages = [
-			"Press P or double-click to switch between oats per second and per click",
+			"Press P or click to switch between oats per second and per click",
 			"new and improved!",
 			"Don't press G",
 			"Cinnamon is a bad investment",
@@ -407,4 +456,8 @@ function check_achievements() {
 		if (game.upgrades[i].unlocked || !game.upgrades[i].canunlock) continue;
 		if (game.upgrades[i].canunlock()) unlock_upgrade(i);
 	}
+	// TODO: cow rebellion
 }
+
+// initialize before full page load
+window.addEventListener("DOMContentLoaded", init);

@@ -24,7 +24,7 @@
 		<script src="clicker.js"></script>
 		<script src="achievements.js"></script>
 	</head>
-	<body onload="init()" oncontextmenu="event.preventDefault()">
+	<body oncontextmenu="event.preventDefault()">
 		<div class="centertext" id="loadingscreen">
 			<div class="scores">
 				Loading...
@@ -36,7 +36,7 @@
 		<div class="full-container">
 			<div class="flex flex-center flex-equal-width flex-wrap">
 				<div class="col-parent" id="oat-col">
-					<div class="scores center centertext" ondblclick="showingops=!showingops">
+					<div class="scores center centertext" onclick="showingops=!showingops">
 						<div id="oats">
 							Oats: 0
 						</div>
