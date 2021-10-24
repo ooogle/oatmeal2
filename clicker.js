@@ -385,7 +385,7 @@ async function init() {
 		document.querySelector("#loadingscreen").classList.add("fadeout");
 		setTimeout(() => {
 			document.querySelector("#loadingscreen").remove();
-		}, 300);
+		}, 400);
 		loaded = true;
 	}, 500);
 }

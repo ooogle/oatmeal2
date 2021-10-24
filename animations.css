@@ -10,7 +10,7 @@
 }
 
 .appear {
-	animation: appear 0.35s ease-out;
+	animation: appear 0.35s ease-out forwards;
 	overflow: hidden;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .slide-left {
-	animation: slide-left 0.4s;
+	animation: slide-left 0.4s forwards;
 }
 
 @keyframes delete-right {
@@ -40,9 +40,7 @@
 }
 
 .delete-right {
-	animation: delete-right 0.3s;
-	opacity: 0;
-	transform: scaleX(0);
+	animation: delete-right 0.3s forwards;
 }
 
 @keyframes fadein {
@@ -54,7 +52,7 @@
 }
 
 .fadein {
-	animation: fadein 0.3s reverse;
+	animation: fadein 0.3s forwards;
 }
 
 .fadeout {

@@ -70,7 +70,7 @@ async function achieve(title, description) {
 		elem.classList.add("delete-right");
 		setTimeout(() => {
 			elem.remove();
-		}, 400)
+		}, 500)
 	}, 4000);
 }
 /** prefetches templates
