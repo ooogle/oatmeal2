@@ -92,7 +92,7 @@ var game = {
 			canunlock: () => game.upgrades.temple.owned > 0,
 			ops: 0,
 			opc: 0,
-			multiplies: "temple",
+			multiplies: ["temple"],
 			multiplier: 1,
 			type: "upgrade"
 		},
@@ -135,7 +135,7 @@ var game = {
 			unlocked: true,
 			ops: 0,
 			opc: 0,
-			multiplies: "spoon",
+			multiplies: ["spoon"],
 			multiplier: 1,
 			type: "upgrade"
 		},
@@ -385,7 +385,7 @@ async function init() {
 		document.querySelector("#loadingscreen").classList.add("fadeout");
 		setTimeout(() => {
 			document.querySelector("#loadingscreen").remove();
-		}, 400);
+		}, 300);
 		loaded = true;
 	}, 500);
 }
@@ -419,8 +419,10 @@ function update_prices() {
 function buy_upgrade(upgrade) {
 	if (game.oat_count < game.upgrades[upgrade].price) return;
 	game.upgrades[upgrade].owned++;
-	if (game.upgrades[upgrade].multiplies) {
-		game.upgrades[game.upgrades[upgrade].multiplies].multiplier += game.upgrades[upgrade].multiplier;
+	if (game.upgrades[upgrade]?.multiplies?.length) {
+		for (let mult of game.upgrades[upgrade].multiplies) {
+			game.upgrades[mult].multiplier += game.upgrades[upgrade].multiplier;
+		}
 	}
 	game.oat_count -= game.upgrades[upgrade].price;
 	update_prices();
