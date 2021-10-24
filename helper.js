@@ -81,3 +81,7 @@ function prefetchtemplates(urls) {
 function randint(min, max) {
 	return Math.floor(Math.random() * max) + min;
 }
+
+function randarr(array) {
+	return array[randint(0, array.length)];
+}

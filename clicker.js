@@ -178,7 +178,7 @@ async function load_save() {
 	
 	game.oat_count += oats_earned;
 	
-	achieve("While you were gone...", "You earned " + numberformat.formatShort(Math.floor(oats_earned), default_format) + " oats");
+	if(oats_earned >= 2) achieve("While you were gone...", "You earned " + numberformat.formatShort(Math.floor(oats_earned), default_format) + " oats");
 }
 
 function resetgame() {
@@ -236,9 +236,60 @@ function game_tick() {
 	check_achievements();
 }
 
+function loadscreen() {
+	if (!loaded) {
+		let messages = [
+			"Press P or double-click to switch between oats per second and per click",
+			"new and improved!",
+			"Don't press G",
+			"Cinnamon is a bad investment",
+			"Screw cookies",
+			"Click that oat!",
+			"Hey kid, want some oats?",
+			"water is wet",
+			"oatmeal is a very healthy food.",
+			"Is this <i>really</i> a good use of your time?",
+			"Winning the oat lottery is unlikely, but nice",
+			"OATS!?!??!",
+			"<q>nice</q> — your 69th oat",
+			"what do you mean, <q>undefined</q>?",
+			"ALL HAIL",
+			"i'll give you an oat if you get in my van",
+			"no, it's not a dumb game",
+			"IT'S RAINING OATS!!!",
+			"Fun fact: October 29th is National Oatmeal Day",
+			"Fun fact: January is National Oatmeal Month",
+			"Ya liek oats?",
+			"Spoons, now with extra-strong handles!",
+			"Beware of the cows",
+			"Cinnamon is a lottery ticket to riches and fortune",
+			"Fun fact: Oat milk comes from oat cows",
+			"Press R to reset your game.",
+			"Cinnamon is a scam",
+			"Brother, may I have some oats?",
+			"Praying to the oat gods twice a day may grant you a longer life",
+			"Oats are good for your bones",
+			"Eat Oats!",
+			"Press S to get a save code. Press L to load your game from one.",
+			"500 gods are better than one.",
+			"I worship the many gods of oat",
+			"make yourself a bowl of oats while you wait.",
+			"free of jQuery since 2019",
+			"Oats are vegan, gluten free, and jQuery free",
+			"here at Oat Clicker, we use DOM",
+			"jQuery sucks.",
+			"I'm a vscode girl"
+		];
+		document.querySelector("#loadmessages").innerHTML = randarr(messages);
+		return void setTimeout(loadscreen, 2000);
+	}
+}
+
 async function init() {
 	// anti cheat (super effective):
 	console.log("%cHEY!\n%cNot here to cheat, are we? \nIf you truly are here for debugging, please report any issues you find at %chttps://github.com/ooogle/oatmeal2/issues/new", "color:blue; font-size: 100px;", "color:#0068df; font-size: 15px;", "font-size:14px; color:#0276fc; background:lightgray;");
+	
+	loadscreen();
 	
 	await prefetchtemplates(["/templates/achievement_template.hbs"]);
 	
@@ -277,6 +328,15 @@ async function init() {
 	
 	setInterval(game_tick, framespeed);
 	setInterval(save_game, 10000); // save every ten seconds
+	
+	// remove loadscreen after 0.5s delay
+	setTimeout(() => {
+		document.querySelector("#loadingscreen").classList.add("fadeout");
+		setTimeout(() => {
+			document.querySelector("#loadingscreen").remove();
+		}, 300);
+		loaded = true;
+	}, 500);
 }
 
 function update_ops() {
@@ -333,7 +393,7 @@ async function unlock_upgrade(i) {
 	
 	// unlock popup
 	let messages = ["You've unlocked ", "You unlocked ", "Now you have ", "You can now buy "];
-	achieve("Booster Unlocked", messages[randint(0, messages.length)] + game.upgrades[i].plural + "!");
+	achieve("Booster Unlocked", randarr(messages) + game.upgrades[i].plural + "!");
 }
 
 function check_achievements() {

@@ -36,7 +36,6 @@
 	100% {
 		opacity: 0;
 		transform: scaleX(0);
-
 	}
 }
 
@@ -44,4 +43,20 @@
 	animation: delete-right 0.3s;
 	opacity: 0;
 	transform: scaleX(0);
+}
+
+@keyframes fadein {
+	from {
+		opacity: 0;
+		filter: blur(5px);
+		transform: scale(1.05);
+	}
+}
+
+.fadein {
+	animation: fadein 0.3s reverse;
+}
+
+.fadeout {
+	animation: fadein 0.3s reverse;
 }
