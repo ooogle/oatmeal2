@@ -11,8 +11,8 @@ function startparticles() {
 	
 	let animatestuff = () => {
 		requestAnimationFrame(animatestuff);
-		lastrun = performance.now();
-	
+		if (!document.hasFocus()) return;
+		
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		for (let particle of particles) {
 			context.globalAlpha = particle.y > canvas.height / 2 ? (canvas.height - particle.y) / (canvas.height / 2) : 1
