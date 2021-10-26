@@ -164,6 +164,12 @@ img {
 	flex-basis: 15%;
 }
 
+#falling_oats {
+	position: fixed;
+	top: 0;
+	z-index: -5;
+}
+
 .scores {
 	filter: drop-shadow(0 0 5px black);
 	font-size: 25px;

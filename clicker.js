@@ -3,7 +3,8 @@ var default_format = {
 	sigfigs: 4
 };
 
-var oat_image = "/sprites/oat.png";
+var oat_image = new Image();
+oat_image.src = "/sprites/oat.png";
 
 var loaded = false; // TODO: loading screen and stuff
 
@@ -237,6 +238,9 @@ function resetgame() {
 function oat_clicked() {
 	game.oat_count += game.opc;
 	check_achievements();
+	if (game.ops < 15 && particles.length < 100) {
+		add_particles(1);
+	}
 }
 
 function game_tick() {
@@ -285,6 +289,13 @@ function game_tick() {
 	}
 	
 	check_achievements();
+	
+	if (game.ops > 10) {
+		add_particles(Math.min(game.ops / 10, 8));
+	}
+	else if (randint(0, 100) < game.ops * 16) {
+		add_particles(1);
+	}
 }
 
 function loadscreen() {
@@ -373,12 +384,13 @@ async function init() {
 	
 	// draw main oat as canvas (very good for mobile usability)
 	let context = document.querySelector("#oat_image").getContext("2d");
-	let img = document.createElement("img");
-	img.src = oat_image;
-	context.drawImage(img, 0, 0, 263, 354);
+	context.drawImage(oat_image, 0, 0, 263, 354);
 	
 	setInterval(game_tick, framespeed);
 	setInterval(save_game, 10000); // save every ten seconds
+	
+	// oat falling animations
+	startparticles();
 	
 	// remove loadscreen after 0.5s delay
 	setTimeout(() => {

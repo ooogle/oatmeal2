@@ -37,17 +37,15 @@ async function fill_template(template_url, data, target_selector, handlebar_opti
 function setup_keymap() {
 	key("p", () => showingops = !showingops);
 	key("g", () => {
-		if (oat_image == "/sprites/fish.png") return;
-		oat_image = "/sprites/fish.png"
+		if (oat_image.src == "/sprites/fish.png") return;
+		oat_image.src = "/sprites/fish.png";
 		let blub = new Audio("/sprites/sounds/blub.mp3");
 		blub.play();
 		let canvas = document.querySelector("#oat_image");
 		let context = canvas.getContext("2d");
-		let img = document.createElement("img");
-		img.src = "/sprites/fish.png";
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		// for some reason there has to be a delay in between these
-		setTimeout(() => context.drawImage(img, 0, 110, 260, 133), 100)
+		setTimeout(() => context.drawImage(oat_image, 0, 110, 260, 133), 300);
 	});
 }
 
@@ -92,7 +90,7 @@ function prefetchtemplates(urls) {
 	* @param {Number} max - the maximum number
 */
 function randint(min, max) {
-	return Math.floor(Math.random() * max) + min;
+	return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function randarr(array) {

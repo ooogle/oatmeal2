@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+	<head>
+		<title>
+			oat clicker particle test
+		</title>
+		<script src="/helper.js"></script>
+		<script>
+			let particles = [];
+			let img = new Image();
+			img.src = "/sprites/oat.png";
+			function animatestuff() {
+				requestAnimationFrame(animatestuff);
+				
+				if (!document.hasFocus()) return;
+				
+				let canvas = document.querySelector("#canvas");
+				
+				let context = canvas.getContext("2d");
+
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				for (let particle of particles) {
+					context.globalAlpha = particle.y > canvas.height / 2 ? (canvas.height - particle.y) / (canvas.height / 2) : 1
+
+					context.drawImage(img, particle.x, particle.y, particle.size, img.height / img.width * particle.size);
+					particle.y += 4;
+					if (particle.y >= canvas.height) particles.splice(particles.indexOf(particle), 1);
+				}
+			}
+			function add_particle() {
+				let canvas = document.querySelector("#canvas");
+				particles.push({
+					x: randint(10, canvas.width),
+					y: randint(-250, -40),
+					size: randint(27, 32)
+				})
+			}
+		</script>
+	</head>
+	<body onload="animatestuff()">	
+		<canvas width="900" height="500" id="canvas">
+			
+		</canvas>
+	</body>
+	
+</html>

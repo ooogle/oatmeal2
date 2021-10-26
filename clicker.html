@@ -23,6 +23,7 @@
 		<script src="helper.js"></script>
 		<script src="clicker.js"></script>
 		<script src="achievements.js"></script>
+		<script src="particles.js"></script>
 	</head>
 	<body oncontextmenu="event.preventDefault()">
 		<div class="centertext" id="loadingscreen">
@@ -42,6 +43,9 @@
 		<div class="full-container">
 			<div class="flex flex-center flex-equal-width flex-wrap">
 				<div class="col-parent" id="oat-col">
+					<canvas id="falling_oats" width="900" height="800">
+
+					</canvas>
 					<div class="scores center centertext" onclick="showingops=!showingops">
 						<div id="oats">
 							Oats: 0
