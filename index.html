@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Play Oat Clicker</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/html5-marquee/css/marquee.min.css">
+	</head>
+	<body>
+		<style>
+			#loadingscreen {
+				background-image: url("/sprites/landing_bg.png");
+				background-repeat: repeat-x;
+				background-position: bottom;
+				background-attachment: fixed;
+				background-size: 1200px;
+			}
+			h1 {
+				font-size: max(min(5vw, 40px), 20px);
+				width: 70%;
+			}
+			.button {
+				font-size: 30px;
+				padding: 8px;
+				width: min(80%, 600px);
+			}
+			.button:hover {
+				transform: scale(1.5);
+			}
+			span {
+				display: inline-block;
+				width: 100%;
+				color: white;
+			}
+		</style>
+		<div class="centertext" id="loadingscreen">
+			<h1 class="marquee marquee-speed-slow center" data-marquee="Oat Clicker - The latest in idle gaming"></h1>
+			
+			<a class="booster button" href="/clicker.html">
+				<span class="centertext">
+					Play Now!
+				</span>
+			</a>
+			
+		</div>
+	</body>
+</html>

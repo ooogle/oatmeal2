@@ -229,6 +229,12 @@ img {
 	filter: drop-shadow(3px 1px 8px #1f1f1f);
 }
 
+.button {
+	padding: 3px 10px;
+	max-height: 100%;
+	display: inline-block;
+}
+
 .enough-money {
 	color: var(--theme-good-color);
 }
