@@ -138,7 +138,8 @@ var game = {
 			opc: 0,
 			multiplies: ["spoon"],
 			multiplier: 1,
-			type: "upgrade"
+			type: "upgrade",
+			own_word: "Spoon Size"
 		},
 		cinnamon: {
 			name: "Cinnamon",
@@ -160,7 +161,25 @@ var game = {
 					}
 				}
 			},
-			type: "upgrade"
+			type: "upgrade",
+			own_word: "Tastiness"
+		},
+		gold: {
+			name: "Gold Pots & Bowls",
+			plural: "Gold Pots & Bowls",
+			description: "Why would you use boring wooden pots & bowls when you could use shiny gold ones?",
+			icon: "/sprites/gold.png",
+			base_price: 800,
+			price_interest: 0.08,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count >= 750,
+			ops: 0,
+			opc: 0.2,
+			multiplies: ["pot", "bowl"],
+			multiplier: 1,
+			type: "upgrade",
+			own_word: "Fanciness"
 		},
 		beetle: {
 			name: "Oat Beetle",
@@ -426,7 +445,7 @@ function update_prices() {
 		if (!game.upgrades[i].unlocked) continue;
 		game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
 		document.querySelector("#price-" + i).innerHTML = numberformat.format(game.upgrades[i].price, default_format) + " oats";
-		document.querySelector("#owned-" + i).innerHTML = "Owned: " + numberformat.format(game.upgrades[i].owned, default_format);
+		document.querySelector("#owned-" + i).innerHTML = (game.upgrades[i].own_text || "Owned") + ": " + numberformat.format(game.upgrades[i].owned, default_format);
 	}
 }
 

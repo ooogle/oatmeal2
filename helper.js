@@ -42,7 +42,7 @@ function setup_keymap() {
 		let blub = new Audio("/sprites/sounds/blub.mp3");
 		blub.play();
 		let canvas = document.querySelector("#oat_image");
-		let context = canvas.getContext("2d");
+		let context = canvas.getContext("2d");		
 		context.clearRect(0, 0, canvas.width, canvas.height);
 		// for some reason there has to be a delay in between these
 		setTimeout(() => context.drawImage(oat_image, 0, 110, 260, 133), 300);
