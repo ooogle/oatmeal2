@@ -37,7 +37,7 @@ async function fill_template(template_url, data, target_selector, handlebar_opti
 function setup_keymap() {
 	key("p", () => showingops = !showingops);
 	key("g", () => {
-		if (oat_image.src == "/sprites/fish.png") return;
+		if (oat_image.src.endsWith("/sprites/fish.png")) return;
 		oat_image.src = "/sprites/fish.png";
 		let blub = new Audio("/sprites/sounds/blub.mp3");
 		blub.play();
