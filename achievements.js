@@ -143,8 +143,6 @@ var achievements = {
 		text: "Oat fetish: you are <a href='https://web.archive.org/web/20201111222258/https://answers.yahoo.com/question/index?qid=20110813210020AAzGwIe' class='link' target='_blank'>sexually attracted to oats.</a>",
 		possible: () => game.oat_count >= 3_000_000
 	},
-	// TODO: uncomment these once all of the upgrades have been added into the game
-	/*
 	beetle1: {
 		text: "You have an Oat Beetle",
 		possible: () => game.upgrades.beetle.owned > 0
@@ -243,5 +241,4 @@ var achievements = {
 			return false;
 		}
 	}
-	*/
 };
