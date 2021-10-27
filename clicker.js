@@ -260,7 +260,7 @@ function update_prices() {
 		if (!game.upgrades[i].unlocked) continue;
 		game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
 		document.querySelector("#price-" + i).innerHTML = numberformat.format(game.upgrades[i].price, default_format) + " oats";
-		document.querySelector("#owned-" + i).innerHTML = (game.upgrades[i].own_text || "Owned") + ": " + numberformat.format(game.upgrades[i].owned, default_format);
+		document.querySelector("#owned-" + i).innerHTML = (game.upgrades[i].own_word || "Owned") + ": " + numberformat.format(game.upgrades[i].owned, default_format);
 	}
 }
 

@@ -17,7 +17,11 @@
 				{{display_price}} oats
 			</div>
 			<span id="owned-{{id}}">
-				Owned: {{display_count}}
+				{{#if own_word}}
+					{{own_word}}: {{display_count}}
+				{{else}}
+					Owned: {{display_count}}
+				{{/if}}
 			</span>
 		</div>
 	</div>

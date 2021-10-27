@@ -179,6 +179,31 @@ var game = {
 			opc: 800,
 			type: "booster",
 			multiplier: 1
+		},
+		honey: {
+			name: "Honey",
+			plural: "Cups of Honey",
+			description: "Makes your oatmeal nice and sweet",
+			icon: "/sprites/honey.png",
+			base_price: 50_000,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.upgrades.cinnamon.owned >= 30 && game.ops >= 200 && game.oat_count >= 10_000,
+			ops: 5,
+			opc: 1,
+			type: "upgrade",
+			multiplier: 1,
+			own_word: "Sweetness",
+			customfunc: {
+				run_every: 8,
+				run: owned => {
+					if (Math.random() * owned > 20) {
+						achieve("Honey Lottery", "You just won the honey lottery!");
+						game.oat_count *= 1.5;
+					}
+				}
+			}
 		}
 	}
 };
