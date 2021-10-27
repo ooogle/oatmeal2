@@ -237,7 +237,7 @@ function resetgame() {
 
 function oat_clicked() {
 	game.oat_count += game.opc;
-	check_achievements();
+	if (screen.width >= 1000) check_achievements(); // mobile gaming
 	if (game.ops < 15 && particles.length < 100) {
 		add_particles(1);
 	}
@@ -291,7 +291,9 @@ function game_tick() {
 	check_achievements();
 	
 	if (game.ops > 10) {
-		add_particles(Math.min(game.ops / 10, 8));
+		let particle_max = 8;
+		if (screen.width <= 1000) particle_max = 1; // mobile gaming moment
+		add_particles(Math.min(game.ops / 10, particle_max));
 	}
 	else if (randint(0, 100) < game.ops * 16) {
 		add_particles(1);

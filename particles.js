@@ -26,13 +26,14 @@ function startparticles() {
 
 function add_particles(amount) {
 	if (particles.length > 95) return;
+	if (screen.width <= 1000 && particles.length > 32) return;
 	let canvas = document.querySelector("#falling_oats");
 	for (let i = 0; i < amount; i++) {
 		particles.push({
 			x: randint(5, canvas.width - 36),
 			y: randint(-250, -40),
-			size: randint(27, 32),
-			speed: randint(22, 38) / 10
+			size: randint(19, 32),
+			speed: randint(16, 43) / 10
 		});
 	}
 }

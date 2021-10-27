@@ -140,6 +140,12 @@ img {
 
 @media (max-width: 900px) {
 	
+	html {
+		zoom: 85%; /* this is really dumb but it makes the page more better on iPhones */
+		user-select: none;
+		touch-action: pan-y;
+	}
+	
 	.main-clicker:active {
 		transform: scale(0.80);
 		filter: drop-shadow(0 0 10px #3f3f2fad);
@@ -269,5 +275,6 @@ img {
 	left: 0;
 	height: 100px;
 	padding: 0 15px 5px;
-	overflow: hidden;
+	overflow: visible;
+	width: 1000%;
 }
