@@ -2,6 +2,7 @@ var game = {
 	oat_count: 0,
 	ops: 0,
 	opc: 1,
+	cow_war_won: false, // TODO: cow rebellion
 	upgrades: {
 		// to calculate the price: base_price * (1 + price_interest) ** owned
 		spoon: {

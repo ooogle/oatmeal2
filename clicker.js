@@ -6,7 +6,7 @@ var default_format = {
 var oat_image = new Image();
 oat_image.src = "/sprites/oat.png";
 
-var loaded = false; // TODO: loading screen and stuff
+var loaded = false;
 
 var current_frame = 0;
 

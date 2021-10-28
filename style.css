@@ -112,7 +112,7 @@ img {
 
 @media (min-width: 900px) {
 	.main-clicker:active {
-		transform: scale(0.85);
+		transform: scale(0.75);
 		filter: drop-shadow(0 0 10px #3f3f2fad);
 		transition: 0.2s ease;
 	}

@@ -56,8 +56,12 @@ var achievements = {
 		possible: () => game.upgrades.cow.owned >= 40
 	},
 	cow50: {
-		text: "great cow Guru: keep an eye on your feilds...",
+		text: "Great Cow Guru: keep an eye on your fields...",
 		possible: () => game.upgrades.cow.owned >= 50
+	},
+	cow100: {
+		text: "milk master: you put the cows in their place",
+		possible: () => game.cow_war_won
 	},
 	oats200: {
 		text: "200 oats! that's incredible!",
@@ -172,7 +176,7 @@ var achievements = {
 		possible: () => game.oat_count >= 100_000_000_000_000
 	},
 	quad: {
-		text: "you have a quadrillion oats",
+		text: "you have one quadrillion oats; go touch some grass",
 		possible: () => game.oat_count >= 1_000_000_000_000_000
 	},
 	granary: {
@@ -240,5 +244,25 @@ var achievements = {
 			}
 			return false;
 		}
+	},
+	honey1: {
+		text: "mmmmm, honey",
+		possible: () => game.upgrades.honey.owned > 0
+	},
+	honey10: {
+		text: "burt: you have a lot of honey",
+		possible: () => game.upgrades.honey.owned >= 10
+	},
+	honey30: {
+		text: "your oatmeal is <i>extremely</i> sweet",
+		possible: () => game.upgrades.honey.owned >= 30
+	},
+	water1: {
+		text: "your oatmeal is now being boiled",
+		possible: () => game.upgrades.water.owned >= 1
+	},
+	water20: {
+		text: "Your oatmeal is super wet",
+		possible: () => game.upgrades.water.owned >= 20
 	}
 };
