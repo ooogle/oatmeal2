@@ -112,7 +112,7 @@ img {
 
 @media (min-width: 900px) {
 	.main-clicker:active {
-		transform: scale(0.75);
+		transform: scale(0.85);
 		filter: drop-shadow(0 0 10px #3f3f2fad);
 		transition: 0.2s ease;
 	}
@@ -147,7 +147,7 @@ img {
 	}
 	
 	.main-clicker:active {
-		transform: scale(0.80);
+		transform: scale(0.90);
 		filter: drop-shadow(0 0 10px #3f3f2fad);
 		transition: 0.2s ease;
 	}
@@ -195,7 +195,7 @@ img {
 .booster {
 	padding: 5px 3px;
 	user-select: none;
-	margin-top: 20px;
+	margin-top: 15px;
 	background: var(--booster-bg);
 	border: var(--booster-border);
 	border-radius: 8px;

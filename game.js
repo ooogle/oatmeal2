@@ -18,6 +18,37 @@ var game = {
 			multiplier: 1,
 			type: "booster"
 		},
+		bs: {
+			name: "Bigger Spoons",
+			plural: "Spoon Size",
+			description: "Make your spoons bigger to scoop up more oats",
+			icon: "/sprites/big_spoon.png",
+			base_price: 112,
+			price_interest: 0.15,
+			owned: 0,
+			unlocked: true,
+			ops: 0,
+			opc: 0,
+			multiplies: ["spoon"],
+			multiplier: 1,
+			type: "upgrade",
+			own_word: "Spoon Size"
+		},
+		beetle: {
+			name: "Oat Beetle",
+			plural: "Beetles",
+			description: "Rolls up balls of oats for you",
+			icon: "/sprites/beetle.png",
+			base_price: 50_000_000,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count >= 150_000_000_000,
+			ops: 700,
+			opc: 800,
+			type: "booster",
+			multiplier: 1
+		},
 		temple: {
 			name: "Temple",
 			plural: "Temples",
@@ -32,6 +63,23 @@ var game = {
 			opc: 0,
 			multiplier: 1,
 			type: "booster"
+		},
+		polytheism: {
+			name: "Polytheism",
+			plural: "Oat Gods",
+			description: "The more gods you worship, the more oats you get",
+			icon: "/sprites/polytheism.png",
+			base_price: 5000,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.upgrades.temple.owned > 0,
+			ops: 0,
+			opc: 0,
+			multiplies: ["temple"],
+			multiplier: 1,
+			type: "upgrade",
+			own_word: "Additional Gods"
 		},
 		water: {
 			name: "Water",
@@ -79,22 +127,6 @@ var game = {
 			multiplier: 1,
 			type: "booster"
 		},
-		polytheism: {
-			name: "Polytheism",
-			plural: "Oat Gods",
-			description: "The more gods you worship, the more oats you get",
-			icon: "/sprites/polytheism.png",
-			base_price: 5000,
-			price_interest: 0.1,
-			owned: 0,
-			unlocked: false,
-			canunlock: () => game.upgrades.temple.owned > 0,
-			ops: 0,
-			opc: 0,
-			multiplies: ["temple"],
-			multiplier: 1,
-			type: "upgrade"
-		},
 		bowl: {
 			name: "Oat Bowl",
 			plural: "Bowls",
@@ -122,22 +154,6 @@ var game = {
 			opc: 5,
 			multiplier: 1,
 			type: "booster"
-		},
-		bs: {
-			name: "Bigger Spoons",
-			plural: "Spoon Size",
-			description: "Make your spoons bigger to scoop up more oats",
-			icon: "/sprites/big_spoon.png",
-			base_price: 112,
-			price_interest: 0.15,
-			owned: 0,
-			unlocked: true,
-			ops: 0,
-			opc: 0,
-			multiplies: ["spoon"],
-			multiplier: 1,
-			type: "upgrade",
-			own_word: "Spoon Size"
 		},
 		cinnamon: {
 			name: "Cinnamon",
@@ -178,21 +194,6 @@ var game = {
 			multiplier: 1,
 			type: "upgrade",
 			own_word: "Fanciness"
-		},
-		beetle: {
-			name: "Oat Beetle",
-			plural: "Beetles",
-			description: "Rolls up balls of oats for you",
-			icon: "/sprites/beetle.png",
-			base_price: 50_000_000,
-			price_interest: 0.1,
-			owned: 0,
-			unlocked: false,
-			canunlock: () => game.oat_count >= 150_000_000_000,
-			ops: 700,
-			opc: 800,
-			type: "booster",
-			multiplier: 1
 		},
 		honey: {
 			name: "Honey",
