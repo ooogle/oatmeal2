@@ -170,7 +170,7 @@ var game = {
 			customfunc: {
 				run_every: 10, // interval (seconds) to run this at
 				run: owned => {
-					if (Math.random() * owned > 90) {
+					if (Math.random() * owned > 95) {
 						achieve("Cinnamon Lottery", "You just won " + numberformat.formatShort(game.oat_count) + " oats!");
 						game.oat_count *= 2;
 					}
@@ -214,10 +214,10 @@ var game = {
 			customfunc: {
 				run_every: 8,
 				run: owned => {
-					if (Math.random() * owned > 40) {
-						achieve("Honey Lottery", "You just won the honey lottery!");
+					if (Math.random() * owned > 45) {
+						if (Math.random() > 0.7) achieve("Honey Lottery", "You just won the honey lottery!");
 						game.oat_count += owned / 500 * Math.random();
-						game.oat_count += game.ops * 10
+						game.oat_count += game.ops * 10 * Math.random();
 					}
 				}
 			}
