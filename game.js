@@ -1,9 +1,7 @@
 var game = {
 	oat_count: 0,
 	ops: 0,
-	ops_multiplier: 1,
 	opc: 1,
-	opc_multiplier: 1,
 	upgrades: {
 		// to calculate the price: base_price * (1 + price_interest) ** owned
 		spoon: {
@@ -11,41 +9,11 @@ var game = {
 			plural: "Spoons",
 			description: "Scoops up oats every five seconds",
 			icon: "/sprites/spoon.png",
-			base_price: 30,
+			base_price: 12,
 			price_interest: 0.15,
 			owned: 0,
 			unlocked: true,
 			ops: 1 / 5,
-			opc: 0,
-			multiplier: 1,
-			type: "booster"
-		},
-		cow: {
-			name: "Oat Cow",
-			plural: "Cows",
-			description: "Makes oat milk, which dries into oats",
-			icon: "/sprites/cow.png",
-			base_price: 230,
-			price_interest: 0.1,
-			owned: 0,
-			unlocked: false,
-			canunlock: () => game.oat_count >= 150,
-			ops: 1,
-			opc: 0,
-			multiplier: 1,
-			type: "booster"
-		},
-		granary: {
-			name: "Granary",
-			plural: "Granaries",
-			description: "Mills you eight oats per second",
-			icon: "/sprites/granary.png",
-			base_price: 480,
-			price_interest: 0.18,
-			owned: 0,
-			unlocked: false,
-			canunlock: () => game.oat_count >= 390,
-			ops: 8,
 			opc: 0,
 			multiplier: 1,
 			type: "booster"
@@ -61,6 +29,52 @@ var game = {
 			unlocked: false,
 			canunlock: () => game.oat_count >= 2000,
 			ops: 15,
+			opc: 0,
+			multiplier: 1,
+			type: "booster"
+		},
+		water: {
+			name: "Water",
+			plural: "Cups of Water",
+			description: "Makes it possible to cook your oatmeal",
+			icon: "/sprites/water.png",
+			base_price: 1200,
+			price_interest: 0.28,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count > 1000 && game.upgrades.cinnamon.owned > 0,
+			ops: 0,
+			opc: 0,
+			multiplier: 1,
+			ops_multiplier: 0.15, // this is technically 1.15 but math stuff so it doesn't become exponential
+			type: "upgrade"
+		},
+		granary: {
+			name: "Granary",
+			plural: "Granaries",
+			description: "Mills you eight oats per second",
+			icon: "/sprites/granary.png",
+			base_price: 420,
+			price_interest: 0.18,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count >= 390,
+			ops: 8,
+			opc: 0,
+			multiplier: 1,
+			type: "booster"
+		},
+		cow: {
+			name: "Oat Cow",
+			plural: "Cows",
+			description: "Makes oat milk, which dries into oats",
+			icon: "/sprites/cow.png",
+			base_price: 230,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			canunlock: () => game.oat_count >= 150,
+			ops: 1,
 			opc: 0,
 			multiplier: 1,
 			type: "booster"
@@ -114,7 +128,7 @@ var game = {
 			plural: "Spoon Size",
 			description: "Make your spoons bigger to scoop up more oats",
 			icon: "/sprites/big_spoon.png",
-			base_price: 100,
+			base_price: 112,
 			price_interest: 0.15,
 			owned: 0,
 			unlocked: true,
@@ -139,8 +153,8 @@ var game = {
 			customfunc: {
 				run_every: 10, // interval (seconds) to run this at
 				run: owned => {
-					if (Math.random() * owned > 100) {
-						achieve("Cinnamon Lottery", "You just won the cinnamon lottery!");
+					if (Math.random() * owned > 90) {
+						achieve("Cinnamon Lottery", "You just won " + numberformat.formatShort(game.oat_count) + " oats!");
 						game.oat_count *= 2;
 					}
 				}
@@ -190,7 +204,7 @@ var game = {
 			owned: 0,
 			unlocked: false,
 			canunlock: () => game.upgrades.cinnamon.owned >= 30 && game.ops >= 200 && game.oat_count >= 10_000,
-			ops: 5,
+			ops: 10,
 			opc: 1,
 			type: "upgrade",
 			multiplier: 1,
@@ -198,9 +212,10 @@ var game = {
 			customfunc: {
 				run_every: 8,
 				run: owned => {
-					if (Math.random() * owned > 20) {
+					if (Math.random() * owned > 40) {
 						achieve("Honey Lottery", "You just won the honey lottery!");
-						game.oat_count *= 1.5;
+						game.oat_count += owned / 500 * Math.random();
+						game.oat_count += game.ops * 10
 					}
 				}
 			}

@@ -11,6 +11,7 @@ function startparticles() {
 	
 	let animatestuff = () => {
 		requestAnimationFrame(animatestuff);
+		if (!particles.length) return;
 		if (!document.hasFocus()) return;
 		
 		context.clearRect(0, 0, canvas.width, canvas.height);
