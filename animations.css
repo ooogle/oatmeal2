@@ -46,7 +46,7 @@
 @keyframes fadein {
 	from {
 		opacity: 0;
-		filter: blur(5px);
+		filter: blur(0.32em);
 		transform: scale(1.05);
 	}
 }
