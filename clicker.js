@@ -135,54 +135,53 @@ function game_tick() {
 }
 
 function loadscreen() {
-	if (!loaded) {
-		let messages = [
-			"Press P or click to switch between oats per second and per click",
-			"new and improved!",
-			"Don't press G",
-			"Cinnamon is a bad investment",
-			"Screw cookies",
-			"Hey kid, want some oats?",
-			"water is wet",
-			"oatmeal is a very healthy food.",
-			"Winning the oat lottery is unlikely, but nice",
-			"what do you mean, <q>undefined</q>?",
-			"[object Object]",
-			"not only is water wet, but it makes you get more oats per second",
-			"according to all known laws of aviation, there is no way a bee should be able to fly",
-			"honey: the bestest lottery ever invented",
-			"ligma balls",
-			"water is 😩😫💦💦",
-			"beware... the cows are more dangerous than you think",
-			"is this game an allegory for late-stage capitalism?",
-			"Remember kids, animal cruelty is poggers",
-			"The world is burning, and oatmeal is the only thing that matters",
-			"proudly written in nano",
-			"i'll give you an oat if you get in my van",
-			"Fun fact: October 29th is National Oatmeal Day",
-			"Fun fact: January is National Oatmeal Month",
-			"Spoons, now with extra-strong handles!",
-			"Beware of the cows",
-			"Cinnamon is a lottery ticket to riches and fortune",
-			"Fun fact: Oat milk comes from oat cows",
-			"Press R to reset your game.",
-			"Cinnamon is a scam",
-			"Brother, may I have some oats?",
-			"Praying to the oat gods twice a day may grant you a longer life",
-			"Oats are good for your bones",
-			"Press S to get a save code. Press L to load your game from one.",
-			"500 gods are better than one.",
-			"I worship the many gods of oat",
-			"make yourself a bowl of oats while you wait.",
-			"free of jQuery since 2019",
-			"Oats are vegan, gluten free, and jQuery free",
-			"here at Oat Clicker, we use DOM",
-			"jQuery sucks.",
-			"I'm a vscode girl"
-		];
-		document.querySelector("#loadmessages").innerHTML = randarr(messages);
-		return void setTimeout(loadscreen, 2000);
-	}
+	if (loaded) return;
+	let messages = [
+		"Press P or click to switch between oats per second and per click",
+		"new and improved!",
+		"Don't press G",
+		"Cinnamon is a bad investment",
+		"Screw cookies",
+		"Hey kid, want some oats?",
+		"water is wet",
+		"oatmeal is a very healthy food.",
+		"Winning the oat lottery is unlikely, but nice",
+		"what do you mean, <q>undefined</q>?",
+		"[object Object]",
+		"not only is water wet, but it makes you get more oats per second",
+		"according to all known laws of aviation, there is no way a bee should be able to fly",
+		"honey: the bestest lottery ever invented",
+		"ligma balls",
+		"water is 😩😫💦💦",
+		"beware... the cows are more dangerous than you think",
+		"is this game an allegory for late-stage capitalism?",
+		"Remember kids, animal cruelty is poggers",
+		"The world is burning, and oatmeal is the only thing that matters",
+		"proudly written in nano",
+		"i'll give you an oat if you get in my van",
+		"Fun fact: October 29th is National Oatmeal Day",
+		"Fun fact: January is National Oatmeal Month",
+		"Spoons, now with extra-strong handles!",
+		"Beware of the cows",
+		"Cinnamon is a lottery ticket to riches and fortune",
+		"Fun fact: Oat milk comes from oat cows",
+		"Press R to reset your game.",
+		"Cinnamon is a scam",
+		"Brother, may I have some oats?",
+		"Praying to the oat gods twice a day may grant you a longer life",
+		"Oats are good for your bones",
+		"Press S to get a save code. Press L to load your game from one.",
+		"500 gods are better than one.",
+		"I worship the many gods of oat",
+		"make yourself a bowl of oats while you wait.",
+		"free of jQuery since 2019",
+		"Oats are vegan, gluten free, and jQuery free",
+		"here at Oat Clicker, we use DOM",
+		"jQuery sucks.",
+		"I'm a vscode girl"
+	];
+	document.querySelector("#loadmessages").innerHTML = randarr(messages);
+	return void setTimeout(loadscreen, 2000);
 }
 
 async function init() {
