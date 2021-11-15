@@ -88,14 +88,14 @@ var game = {
 			description: "Makes it possible to cook your oatmeal",
 			icon: "/sprites/water.png",
 			base_price: 1200,
-			price_interest: 0.28,
+			price_interest: 0.2,
 			owned: 0,
 			unlocked: false,
 			canunlock: () => game.oat_count > 1000 && game.upgrades.cinnamon.owned > 0,
 			ops: 0,
 			opc: 0,
 			multiplier: 1,
-			ops_multiplier: 0.15, // this is technically 1.15 but math stuff so it doesn't become exponential
+			ops_multiplier: 0.16, // this is technically 1.15 but math stuff so it doesn't become exponential
 			type: "upgrade"
 		},
 		granary: {
@@ -162,7 +162,7 @@ var game = {
 			description: "Makes your oatmeal taste better",
 			icon: "/sprites/cinnamon.png",
 			base_price: 250,
-			price_interest: 0.12,
+			price_interest: 0.2,
 			owned: 0,
 			unlocked: true,
 			ops: 0,
@@ -170,10 +170,15 @@ var game = {
 			customfunc: {
 				run_every: 10, // interval (seconds) to run this at
 				run: owned => {
-					if (Math.random() * owned > 95) {
-						achieve("Cinnamon Lottery", "You just won " + numberformat.formatShort(game.oat_count) + " oats!");
-						game.oat_count *= 2;
+					let wins = 0;
+					for (let i = 0; i < owned; i++) {
+						if (Math.random() < 1 / owned) {
+							wins++;
+						}
 					}
+					let to_add = Math.random() * game.oat_count * wins / 2;
+					game.oat_count += to_add;
+					if (to_add > 0) achieve("Cinnamon Lottery", "You just won " + numberformat.formatShort(to_add) + " oats!");
 				}
 			},
 			type: "upgrade",
@@ -202,23 +207,29 @@ var game = {
 			description: "Makes your oatmeal nice and sweet",
 			icon: "/sprites/honey.png",
 			base_price: 50_000,
-			price_interest: 0.1,
+			price_interest: 0.32,
 			owned: 0,
 			unlocked: false,
 			canunlock: () => game.upgrades.cinnamon.owned >= 30 && game.ops >= 200 && game.oat_count >= 10_000,
-			ops: 10,
+			ops: 0,
 			opc: 1,
 			type: "upgrade",
 			multiplier: 1,
 			own_word: "Sweetness",
 			customfunc: {
-				run_every: 8,
+				run_every: 32,
 				run: owned => {
-					if (Math.random() * owned > 45) {
-						if (Math.random() > 0.7) achieve("Honey Lottery", "You just won the honey lottery!");
-						game.oat_count += owned / 500 * Math.random();
-						game.oat_count += game.ops * 10 * Math.random();
+					let wins = 0;
+					for (let i = 0; i < owned; i++) {
+						if (Math.random() < 0.55) {
+							wins++;
+						}
 					}
+					let to_add = wins / 5 * Math.random();
+					to_add += game.ops * wins * Math.random();
+					to_add *= 5 * Math.random();
+					game.oat_count += to_add;
+					if (to_add > 0) achieve("Honey Lottery", "Honey just won you " + numberformat.formatShort(Math.ceil(to_add)) + " oats!");
 				}
 			}
 		}

@@ -59,7 +59,7 @@ async function load_save() {
 	
 	let oats_earned = (Date.now() - save.timestamp) / 1000 * game.ops / 3
 	
-	game.oat_count += oats_earned;
+	game.oat_count += oats_earned / 10;
 	
 	if(oats_earned >= 2) achieve("While you were gone...", "You earned " + numberformat.formatShort(Math.floor(oats_earned), default_format) + " oats");
 }
