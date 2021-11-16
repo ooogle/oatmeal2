@@ -14,7 +14,7 @@ var showingops = true;
 
 var last_run = performance.now();
 
-function save_game() {
+function generate_save() {
 	let save = {
 		timestamp: Date.now(),
 		game: {
@@ -34,13 +34,34 @@ function save_game() {
 	for (let i in achievements) {
 		if (achievements[i].has_unlocked) save.achievements[i] = {has_unlocked: true};
 	}
-	
+	return save;
+}
+
+function make_save_string() {
+	let save = generate_save();
+	let encoded = cipher.encode(JSON.stringify(save));
+	return encoded;
+}
+
+function load_save_from_string(str) {
+	let json = cipher.decode(str);
+	let save = JSON.parse(json);
+	localforage.setItem("save", save);
+	window.location = window.location;
+}
+
+function save_game() {
+	let save = generate_save();
 	localforage.setItem("save", save);
 }
 
-async function load_save() {
+async function load_game() {
 	let save = await localforage.getItem("save");
 	if (!save) return;
+	load_save(save);
+}
+
+function load_save(save) {
 	for (let i in save.achievements) {
 		achievements[i].has_unlocked = save.achievements[i].has_unlocked;
 	}
@@ -192,7 +213,7 @@ async function init() {
 	
 	await prefetchtemplates(["/templates/achievement_template.hbs"]);
 	
-	await load_save();
+	await load_game();
 	
 	setup_keymap();
 	
