@@ -218,6 +218,9 @@ async function init() {
 	setup_keymap();
 	
 	for (let i in game.upgrades) {
+		if (game.upgrades[i].works) {
+			if (!game.upgrades[i].works()) continue;
+		}
 		if (game.upgrades[i].unlocked) {
 			game.upgrades[i].price = game.upgrades[i].base_price * (1 + game.upgrades[i].price_interest) ** game.upgrades[i].owned
 			let template_data = {
@@ -266,6 +269,9 @@ function update_ops() {
 	let opc_multiplier = 1;
 	let ops_multiplier = 1;
 	for (let i in game.upgrades) {
+		if (game.upgrades[i].works) {
+			if (!game.upgrades[i].works()) continue;
+		}
 		ops += (game.upgrades[i].ops || 0) * (game.upgrades[i].multiplier || 1) * game.upgrades[i].owned;
 		opc += (game.upgrades[i].opc || 0) * (game.upgrades[i].multiplier || 1) * game.upgrades[i].owned;
 		if (game.upgrades[i].opc_multiplier) opc_multiplier += game.upgrades[i].opc_multiplier * game.upgrades[i].owned;

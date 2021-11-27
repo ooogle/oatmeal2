@@ -232,6 +232,37 @@ var game = {
 					if (to_add > 0) achieve("Honey Lottery", "Honey just won you " + numberformat.formatShort(Math.ceil(to_add)) + " oats!");
 				}
 			}
+		},
+		oatnog: {
+			name: "Oatnog",
+			plural: "Oatnogs",
+			description: "Makes your oatmeal taste way better than oats with cinnamon, honey or water (December exclusive)",
+			icon: "/sprites/oatnog.png",
+			canunlock: () => game.oat_count > 100 && (new Date()).getMonth() == 11,
+			works: () => (new Date()).getMonth() == 11,
+			base_price: 200,
+			price_interest: 0.1,
+			owned: 0,
+			unlocked: false,
+			ops: 0.02,
+			opc: 0,
+			type: "upgrade",
+			multiplier: 1,
+			own_word: "Big Tastiness",
+			customfunc: {
+				run_every: 60,
+				run: owned => {
+					let wins = 0;
+					for (let i = 0; i < owned; i++) {
+						if (randint(0, 10) == 5) {
+							wins++;
+						}
+					}
+					to_add = wins * 100;
+					game.oat_count += to_add;
+					if (to_add > 0) achieve("EPIC GIFT!", "Oatnog just got you " + numberformat.formatShort(Math.ceil(to_add)) + " oats!");
+				}
+			}
 		}
 	}
 };
