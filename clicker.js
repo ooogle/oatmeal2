@@ -128,9 +128,13 @@ function game_tick() {
 	if (current_frame != 5) return current_frame++;
 	current_frame = 0;
 	
+	
 	// update price stuff
 	for (let i in game.upgrades) {
 		if (!game.upgrades[i].unlocked) continue;
+		if (game.upgrades[i].works) {
+			if (!game.upgrades[i].works()) continue;
+		}
 		if (game.oat_count >= game.upgrades[i].price) {
 			document.querySelector("#price-" + i).classList.remove("not-enough-money");
 			document.querySelector("#price-" + i).classList.add("enough-money");

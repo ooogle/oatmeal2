@@ -261,6 +261,7 @@ var game = {
 					to_add = wins * 100;
 					game.oat_count += to_add;
 					if (to_add > 0) achieve("EPIC GIFT!", "Oatnog just got you " + numberformat.formatShort(Math.ceil(to_add)) + " oats!");
+					if ((new Date()).getMonth() != 11) return void save_game(), window.location = window.location;
 				}
 			}
 		}
