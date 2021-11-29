@@ -128,7 +128,6 @@ function game_tick() {
 	if (current_frame != 5) return current_frame++;
 	current_frame = 0;
 	
-	
 	// update price stuff
 	for (let i in game.upgrades) {
 		if (!game.upgrades[i].unlocked) continue;
