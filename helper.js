@@ -36,6 +36,7 @@ async function fill_template(template_url, data, target_selector, handlebar_opti
 /** initialzes the keymap **/
 function setup_keymap() {
 	key("p", () => showingops = !showingops);
+	
 	key("g", () => {
 		if (oat_image.src.endsWith("/sprites/fish.png")) return;
 		oat_image.src = "/sprites/fish.png";
@@ -47,6 +48,16 @@ function setup_keymap() {
 		// for some reason there has to be a delay in between these
 		setTimeout(() => context.drawImage(oat_image, 0, 110, 260, 133), 300);
 	});
+	
+	key("r", confirmreset);
+}
+
+async function confirmreset() {
+	let continue1 = await custom_confirm("Reset game?", "all of your progress will be lost");
+	if (!continue1) return;
+	let continue2 = await custom_confirm("Are you sure?", "this cannot be undone, your save will be gone forever", "I'm sure!", "wait no");
+	if (!continue2) return;
+	resetgame();
 }
 
 /** makes achievement popup
