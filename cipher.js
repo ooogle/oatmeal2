@@ -62,7 +62,6 @@
 		for (let i = 0; i < groups.length - 1; i++) {
 			groups[i] = "0".repeat(6 - groups[i].length) + groups[i]; // pad groups
 		}
-				
 		
 		let bytes = splitarray(groups.join("").split(""), 8); // convert groups of 6 to groups of 8
 		

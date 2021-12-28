@@ -96,3 +96,22 @@ function randint(min, max) {
 function randarr(array) {
 	return array[randint(0, array.length)];
 }
+
+async function custom_confirm(question, caption, yes_text, no_text) {
+	yes_text = yes_text || "yes";
+	no_text = no_text || "no";
+	let elem = await fill_template("/templates/confirm_template.hbs", {question, caption, yes_text, no_text}, null);
+	document.body.appendChild(elem);
+	return new Promise((resolve, reject) => {
+		let yes = () => {
+			resolve(true);
+			elem.remove();
+		}
+		let no = () => {
+			resolve(false);
+			elem.remove();
+		};
+		elem.querySelector("div[response=yes]").onclick = yes;
+		elem.querySelector("div[response=no]").onclick = no;
+	});
+}
