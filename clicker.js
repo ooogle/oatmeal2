@@ -30,7 +30,7 @@ function generate_save() {
 			multiplier: game.upgrades[i].multiplier
 		}
 	}
-	
+
 	for (let i in achievements) {
 		if (achievements[i].has_unlocked) save.achievements[i] = {has_unlocked: true};
 	}
@@ -65,23 +65,23 @@ function load_save(save) {
 	for (let i in save.achievements) {
 		achievements[i].has_unlocked = save.achievements[i].has_unlocked;
 	}
-	
+
 	for (let i in save.game.upgrades) {
 		game.upgrades[i].owned = save.game.upgrades[i].owned;
 		game.upgrades[i].multiplier = save.game.upgrades[i].multiplier;
 		game.upgrades[i].unlocked = true; // only unlocked upgrades are saved, so this is true if the save exists
 	}
-	
+
 	game.oat_count = save.game.oat_count;
-	
+
 	update_ops();
-	
+
 	if ((Date.now() - save.timestamp) / 1000 < 60) return;
-	
+
 	let oats_earned = (Date.now() - save.timestamp) / 1000 * game.ops / 3
-	
+
 	game.oat_count += oats_earned / 10;
-	
+
 	if(oats_earned >= 2) achieve("While you were gone...", "You earned " + numberformat.formatShort(Math.floor(oats_earned), default_format) + " oats");
 }
 
@@ -100,9 +100,9 @@ function oat_clicked() {
 
 function game_tick() {
 	game.oat_count += game.ops * (performance.now() - last_run) / 1000;
-	
+
 	last_run = performance.now();
-	
+
 	if (game.oat_count > 0) {
 		document.title = numberformat.formatShort(Math.floor(game.oat_count)) + " oats - Oat Clicker";
 	}
@@ -112,22 +112,22 @@ function game_tick() {
 
 	// this should never happen, but just in case
 	if (isNaN(game.oat_count)) game.oat_count = 0;
-	
+
 	if (!document.hasFocus()) return; // don't waste resources on other dom updates when the document doesn't have focus
-	
+
 	document.querySelector("#oats").innerHTML = "Oats: " + numberformat.format(Math.floor(game.oat_count), default_format);
-	
+
 	if (showingops) {
 		document.querySelector("#ops").innerHTML = "Per second: " + (game.ops > 999 ? numberformat.formatShort(game.ops) : Math.floor(game.ops * 10) / 10);
 	}
 	else {
 		document.querySelector("#ops").innerHTML = "Per click: " + (game.opc > 999 ? numberformat.formatShort(game.opc) : Math.floor(game.opc * 10) / 10);
 	}
-	
+
 	// this stuff will only run every 5 frames
 	if (current_frame != 5) return current_frame++;
 	current_frame = 0;
-	
+
 	// update price stuff
 	for (let i in game.upgrades) {
 		if (!game.upgrades[i].unlocked) continue;
@@ -145,9 +145,9 @@ function game_tick() {
 			document.querySelector("#booster-" + i).classList.add("cantbuy");
 		}
 	}
-	
+
 	check_achievements();
-	
+
 	if (game.ops > 10) {
 		let particle_max = 8;
 		if (screen.width <= 1000) particle_max = 1; // mobile gaming moment
@@ -177,6 +177,7 @@ function loadscreen() {
 		"honey: the bestest lottery ever invented",
 		"ligma balls",
 		"water is 😩😫💦💦",
+		"Never imagine yourself not to be otherwise than what it might appear to others that what you were or might have been was not otherwise than what you had been would have appeared to them to be otherwise.",
 		"beware... the cows are more dangerous than you think",
 		"is this game an allegory for late-stage capitalism?",
 		"Remember kids, animal cruelty is poggers",
@@ -211,15 +212,15 @@ function loadscreen() {
 async function init() {
 	// anti cheat (super effective):
 	console.log("%cHEY!\n%cNot here to cheat, are we? \nIf you truly are here for debugging, please report any issues you find at %chttps://github.com/ooogle/oatmeal2/issues/new", "color:blue; font-size: 100px;", "color:#0068df; font-size: 15px;", "font-size:14px; color:#0276fc; background:lightgray;");
-	
+
 	loadscreen();
-	
+
 	await prefetchtemplates(["/templates/achievement_template.hbs"]);
-	
+
 	await load_game();
-	
+
 	setup_keymap();
-	
+
 	for (let i in game.upgrades) {
 		if (game.upgrades[i].works) {
 			if (!game.upgrades[i].works()) continue;
@@ -233,11 +234,11 @@ async function init() {
 				display_count: numberformat.format(game.upgrades[i].owned, default_format),
 				id: i
 			}
-			
+
 			let target_element = "#" + game.upgrades[i].type + "s";
 			await fill_template("/templates/booster_template.hbs", template_data, target_element);
 		}
-		
+
 		// for upgrades with a custom function such as cinnamon
 		if (game.upgrades[i].customfunc) {
 			setInterval(() => {
@@ -245,17 +246,17 @@ async function init() {
 			}, game.upgrades[i].customfunc.run_every * 1000);
 		}
 	}
-	
+
 	// draw main oat as canvas (very good for mobile usability)
 	let context = document.querySelector("#oat_image").getContext("2d");
 	context.drawImage(oat_image, 0, 0, 263, 354);
-	
+
 	setInterval(game_tick, framespeed);
 	setInterval(save_game, 10000); // save every ten seconds
-	
+
 	// oat falling animations
 	startparticles();
-	
+
 	// remove loadscreen after 0.5s delay
 	setTimeout(() => {
 		document.querySelector("#loadingscreen").classList.add("fadeout");
@@ -322,7 +323,7 @@ async function unlock_upgrade(i) {
 	elem.classList.add("appear");
 	target_element.insertBefore(elem, target_element.children[1]);
 	game.upgrades[i].unlocked = true;
-	
+
 	// unlock popup
 	let messages = ["You've unlocked ", "You unlocked ", "Now you have ", "You can now buy "];
 	achieve("Booster Unlocked", randarr(messages) + game.upgrades[i].plural + "!");
@@ -334,7 +335,7 @@ function check_achievements() {
 		achieve("Achievement Unlocked", achievements[i].text);
 		achievements[i].has_unlocked = true;
 	}
-	
+
 	for (let i in game.upgrades) {
 		if (game.upgrades[i].unlocked || !game.upgrades[i].canunlock) continue;
 		if (game.upgrades[i].canunlock()) unlock_upgrade(i);
